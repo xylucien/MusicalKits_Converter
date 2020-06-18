@@ -13,10 +13,10 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   access_key_id:
-    secure: AKIAXKOAZVIY77X3SN7T
+    secure: "AKIAXKOAZVIY77X3SN7T"
   secret_access_key:
-    secure: 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
+    secure: "0sDII4o9X3Jsy96IIOpDDFwpVg2HyjmdWBo5ns+c"
   region: us-east-1
   app: Flask
   env: test-Flask
-  bucket_name: elasticbeanstalk-us-east-1-503452379697
+  bucket_name: "elasticbeanstalk-us-east-1-503452379697"
