@@ -13,10 +13,10 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   access_key_id:
-    secure: $AWS_ACCESS_KEY_ID
+    secure: \$AWS_ACCESS_KEY_ID
   secret_access_key:
-    secure: $AWS_ACCESS_KEY_SECRET
+    secure: \$AWS_ACCESS_KEY_SECRET
   region: us-east-1
   app: Flask
   env: test-Flask
-  bucket_name: $AWS_EB_S3_BUCKET
+  bucket_name: \$AWS_EB_S3_BUCKET
