@@ -1,0 +1,22 @@
+language: python
+python:
+  - 3.6
+before_install:
+  - python --version
+  - pip install -U pip
+  - pip install -U pytest pytest-cov
+  - pip install codecov
+script: pytest
+after_success:
+  - pytest --cov=./
+  - codecov
+deploy:
+  provider: elasticbeanstalk
+  access_key_id:
+    secure: $AWS_ACCESS_KEY_ID
+  secret_access_key:
+    secure: $AWS_ACCESS_KEY_SECRET
+  region: us-east-1
+  app: Flask
+  env: test-Flask
+  bucket_name: $AWS_EB_S3_BUCKET
