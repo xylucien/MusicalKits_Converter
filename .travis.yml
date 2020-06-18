@@ -13,9 +13,9 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   access_key_id:
-    secure: "AKIAJFSPQHWOSA7D7OZQ"
+    secure: key
   secret_access_key:
-    secure: "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"
+    secure: key-pass
   region: us-east-1
   app: Flask
   env: test-Flask
