@@ -1,22 +1,29 @@
 language: python
 python:
-  - 3.6
+- 3.6
 before_install:
-  - python --version
-  - pip install -U pip
-  - pip install -U pytest pytest-cov
-  - pip install codecov
+- python --version
+- pip install -U pip
+- pip install -U pytest pytest-cov
+- pip install codecov
 script: pytest
 after_success:
-  - pytest --cov=./
-  - codecov
+- pytest --cov=./
+- codecov
 deploy:
   provider: elasticbeanstalk
   access_key_id:
-    secure: key
+    secure: "$AWS_ACCESS_KEY_ID"
   secret_access_key:
-    secure: key-pass
-  region: us-east-1
+    secure: "$AWS_ACCESS_KEY_SECRET"
+  region: "$AWS_REGION"
   app: Flask
   env: test-Flask
-  bucket_name: "elasticbeanstalk-us-east-1-503452379697"
+  bucket_name: "$AWS_EB_S3_BUCKET"
+env:
+  global:
+  - secure: aJPbpvy03e9S0I5a1ESRDQuOgdxavuk/isxLDMFzXefRauhcMnIU5Psm3oAeWUVASi/qqLyUsV1KwdYrWuOgHiSEDlpZrShpOiBldsM8KSHV6f6Rd3ByyZiT8Zn38lc2CzUTDJ0fPsVoMHWmxbvgEsccR7FozoOuK10kblNwwQl1BJlZzB3zGICAhUGi7RfXnq7x3fe+SEYOuz4dh03kwxpXEMYdTYjsRo9EyyvZosqlo5gsz0lbBDCFKR7kP9vS3M5JqryzSTPAKPLIt3vb837OLHgWBL3piJSXxRQAZfk0HHclGsUD6smJpFL6SgGP34XSkT3wOy3RndjSHmvDterWA3SNtuyLBXAy+xDKzizEqwnu89Z3HzEPhfB4OyuU/eEij5vlkmzF6Z5HsIDMnLXj0V4e6isxJ7xbIL5Goa7PX4spyvFWLFBQ+FP61P34XjMO3uJz1xQ1YJXeqzCY/LTnvXr0Y877qgBUZbvoKcea2DhY8guKq/gEi09wJU0r2fC0wyqDhHlN3FkGbzar+0UZZIlV1/GwrpDVpVsvmEkpPGUZNhDeswSbiTDdemweujBhY70aHWsEnx9ycXStNec6sO/dlCkiFu1HHLyI2cwHHf94dCvEfU0T3qKIs0EmFZqOWY2qfDT1OZ/QWOXYn+shmB6sHMwkh/mPnO5RYO0=
+  - secure: 1jL96NNNTNxvwjxkY9jlnPh4I65MFqE/Y145qisulbEa5L1wBZ7MKQ+e8sjWzypR1cGBAQRj0hQJPFD+CnCqnmzbcaUFF5zbTJJat8/9v9hFhMtwgeFax/pZU7a5I/X25Q3q5kv21RssdpHyvSZFtKAb7Iwf6dkH9WfqLDSN3B0eVcWjGO0PH0F+x82oWans5Fh2Uy5pSH6rh3VLyvXUU5dPJD8xqYyzBn8bw6xGGNJKqyca/p49MqC180FYXk6R0/XQFrr1RkWRJmmsCO8CesL9oP69B9Xu8m8EjzrNWcrd1XE55PTmSHNkw7xn7Zcb5MeEcs+zrLsbItaxEcUWTwrn/MkcFsTIVOI3HCp0scEGF99RxFFEex36R9yVjJeBD8pnfv/r9lfkdRN8NSApXRQDPPvHhJ2sJj0gOI3982NiAkUVsby+47MRXUULax/ZwCMVl52DjvQ8xXHaod0le+0Gy3wItmMYuGgwa8Ih0mW7HRIrPuMfHecMiC60PZjaUAST5QYx148tgCmtxrkZQpE6Bq1CluYuS+N/NDZoqUwdKseJHawm/nn0fBS6OwM9tClYIX4tF8T7iu3fs7N9ZPZSstg6HvUQPr7wMyLxvQ94TPSZuV/R/SgDEcG+xymcnbF2/pW7D39fr9yxiemQci6e7+TIJtpSvsLm2v+YIlU=
+  - secure: gIaHbbLhjalh4Xyg7yTxtxd9FTJDZicnTygR047m0lRCZojWUUKH1W7zQE64ra/u3afbrgpAeXCwMyu/82Psv04sj7Ltpz5dUPUOtMD5X+DrNqzjukSgosZp7AFxF9tTOx773YUbA34zk7LbMiQc48Z0Ge1hqCza7yGIrbKwrKHkWAdxbGm0Jc1OYeSNhl4UCIV4wySKp/uJN8drM4iqg5pzDpzTQnmy1d7v0PS921JVLOmRAfH6omA4UjeDJvWKSk67iunAmMvQyNJjwxtUmCCcOYDfaId/oXDv511ZCot6IyKaPvDB+BfPnfc4gJFS+13Up0cFdvmJYEI6pg3ahNBcTUIfPmAHAWrJpADfbZENavv8VtnvRvLBbcrENM2qAe8gH7qXIUZds+YEQfbmQRbUXJ5vs6nPDP2Uo2WmCTkfI2xwNzvszP8fDebGsN24y5aG9RmGdoGy+oHXV689ASIofrO40czMrjz9CAQzwiAJTgyWIAPHLLCgvJdwLVgvR4oR9X4Cqv3mz9Cx1Kw34109QQtK9/BGPqi287hE4M5qBX1CHjPZz2UVAAoKB9mpO4V+ZVTOt19Q6Uq0dzlutTtelzKOM7jv4fpLhDoGuJ6dUDFIMRR849Ij2ZxDn5JbPaqmOXNCAkYGiIwem5BddiV5nrOsAxpgGn6UVke469E=
+dd:
+  secure: C2wYBCXdTR9vmkUNrchZyEUwySFjTLreTJ/rryV5ywJPCAKRiOxumVaAXbeVfEZkOrMwtffgMegkn7cWJQ3RVl+q7mvls8aB6jVJDn6Vuso5O1uyt0ztYOzdlhCSFSeZLHZkRVJz99cHJInYURpgegJoWB9A/Hiwhl6NExpmwHzQOTjpzo+E772apUD82KSFm5EeT3Ql1b/Jekv7c1hvoRV2tlfvtlNptZzywWGE3S4Ttp6BD3rdLwbA5uBNndX4jodlF1kpTeG0BE3O1L+KsbOEooghycWL1xWeWjgEmrF10y/YRA1YEPbq/eN5QEBKU0r9RSNvJdn2SaUBWJQtYS70JnVsEkoDnnXWaFquDOZR+QAgRUP+nWJ1wb8oQ3wJiMzzf/POkiMFrM0sXsIteD54WWIsvqSUi83vsMSWLXzSv6vcfOwMpYCb//Hbja1nygRchmrjQ8hX1Ri2fxBmr7Y4nPTYQCZkRuVjWKLFG9wCR8y8cqA76i6ZiDhHYMtl7qVgcF7NRZkCtMciJLmjqiEK+s8f+95pDupec1DzmMWVBbQAOnYv2ZdCUbnQZVIVUgsOOkjmLr6xtCp3bJhUJHS+I5NSsUB+mXWMrGHAV6v85Dpwp6PVitss9o+JWisEzCdkNeJZAI2UkdhbGCBzA/X9BAQzfqTsukJsa5V7ey8=
