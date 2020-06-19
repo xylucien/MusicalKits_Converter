@@ -12,10 +12,8 @@ after_success:
 - codecov
 deploy:
   provider: elasticbeanstalk
-  access_key_id:
-    secure: "$AWS_ACCESS_KEY_ID"
-  secret_access_key:
-    secure: "$AWS_ACCESS_KEY_SECRET"
+  access_key_id: "$AWS_ACCESS_KEY_ID"
+  secret_access_key: "$AWS_ACCESS_KEY_SECRET"
   region: "$AWS_REGION"
   app: Flask
   env: test-Flask
