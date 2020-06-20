@@ -10,7 +10,7 @@
 
     <div class="form">
         <form action="/update/{{task.id}}" method="POST">
-            <input type="text" name="content" id="content" value="{{task.content}}">
+            <textarea name="content" id="content" rows="15" cols="160">{{task.content}}</textarea>
             <input type="submit" value="Update">
         </form>
     </div>
