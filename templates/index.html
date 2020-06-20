@@ -18,7 +18,7 @@
         </tr>
         {% for task in tasks %}
             <tr>
-                <td>{{ task.content }}</td>
+                <textarea rows="8" cols="60">{{ task.content }}</textarea>
                 <td>{{ task.date_created.date() }}</td>
                 <td>
                     <a href="/delete/{{task.id}}">Delete</a>
@@ -31,8 +31,8 @@
     {% endif %}
 
     <div class="form">
-        <form action="/" method="POST">
-            <input type="text" name="content" id="content" size = "50" style="height:300px;font-size:14pt;">
+        <form action="/" method="POST" id="input">
+            <textarea name="content" id="content" form="input" rows="8" cols="50"></textarea>
             <input type="submit" value="Submit!">
         </form>
     </div>
