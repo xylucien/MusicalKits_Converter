@@ -1,12 +1,15 @@
 X:1
-T:Quem queritis
-Z:Copyright 2010 MakeMusic, Inc.
-L:1/4
-Q:1/4=120
-M:none
+T:Saltarello
+C:Anonymous
+Z:Copyright © 2010 MakeMusic, Inc.
+L:1/8
+Q:1/4=180
+M:6/8
 I:linebreak $
 K:C
-V:1 treble nm="Voice"
+V:1 alto nm="MusicXML Part"
 V:1
-"^Angelus dicit:" (G F) (D F E) (F G F) G F A (A c B A) (c G A G)"_|" (G A) (G F) (A c) A G || %1
-w: Quem * que- * * ri- * * tis in se- pul- * * * chro, _ _ _ o * Chri- * sti- * co- lae?|
+"^1." CB,A, G,A,B, | CDB, (C2 G,) | A,B,C A,B,G, | CB,C (D2 E) | CGF E2 D | CGF (E2 D) |1 %6
+ CB,C (A,2 E) | !wedge!A,!wedge!E!wedge!E A,3 :|2$ CB,C A,B,C | (D/C/D)B, C3 |:"^2." EDC (B,2 A,) | %11
+ (C2 D) (E2 D) | CB,C (A,2 B,) | G,A,B, (C2 G,) | A,B,C A,B,G, |$ CB,C (D2 E) | CGF (E2 D) | %17
+ CGF (E2 D) |1 CB,C (A,2 E) | !wedge!A,!wedge!E!wedge!E A,3 :|2 CB,C A,B,C | (D/C/D)B, C3 |] %22
