@@ -1,8 +1,19 @@
-# coding=latin-1
+# coding=utf-8
+'''
+Copyright (C) 2012-2018: Willem G. Vree
+Contributions: Nils Liberg, Nicolas Froment, Norman Schmidt, Reinier Maliepaard, Martin Tarenskeen,
+               Paul Villiger, Alexander Scheutzow, Herbert Schneider, David Randolph
 
+This program is free software; you can redistribute it and/or modify it under the terms of the
+Lesser GNU General Public License as published by the Free Software Foundation;
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the Lesser GNU General Public License for more details. <http://www.gnu.org/licenses/lgpl.html>.
+'''
 try:    import xml.etree.cElementTree as E
 except: import xml.etree.ElementTree as E
-import os, sys, types, re, math
+import os, sys, types, re, math, io
 
 VERSION = 139
 
@@ -421,8 +432,13 @@ class ABCoutput:
     def writeall (s):  # determine the required encoding of the entire ABC output
         str = ''.join (s.outlist)
         if s.dojef: str = perc2map (str)
-        if python3: s.outfile.write (str)
-        else:       s.outfile.write (str.encode ('utf-8'))
+        if s.outfile == sys.stdout: 
+            f = io.open("result.abc", "w+", encoding='utf-8')
+            f.write(str)
+            f.close()
+            print("finished! Result saved at result.abc")
+        elif not python3: s.outfile.write (str.encode ('utf-8'))
+        else: s.outfile.write (str) 
         if s.pad: s.outfile.close ()                # close each file with -o option
         else: s.outfile.write ('\n')                # add empty line between tunes on stdout
         info ('%s written with %d voices' % (s.fnmext, len (s.clefs)), warn=0)
