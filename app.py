@@ -39,7 +39,12 @@ def index():
         result = stdout
         if(result==''):
             result = stderr + '\n' + "There is something wrong with your input. Please check again!"
-        new_task = Todo(content= result) 
+        
+        f2 = io.open("result.abc", "r+", encoding='utf-8')
+        converted_text = f2.read()
+        f2.close()
+        
+        new_task = Todo(content= result + converted_text) 
         try:
             db.session.add(new_task)
             db.session.commit()
