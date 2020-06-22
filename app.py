@@ -31,6 +31,7 @@ def allowed_file(filename):
 def index():
     if request.method == 'POST':
         task_content = request.form['content']
+        converted_text = ''
         f = io.open("temp.musicxml", "w+", encoding='utf-8')
         f.write(task_content)
         f.close()
@@ -38,19 +39,23 @@ def index():
         stdout, stderr = process.communicate()
         result = stdout
         if(result==''):
-            result = stderr + '\n' + "There is something wrong with your input. Please check again!"
-        
-        f2 = io.open("result.abc", "r+", encoding='utf-8')
-        converted_text = f2.read()
-        f2.close()
+            result = stderr + '\n' + "There is something wrong with your input. Please check again!\n"
+        else:  
+            f2 = io.open("result.abc", "r+", encoding='utf-8')
+            converted_text = f2.read()
+            f2.close()
         
         new_task = Todo(content= result + converted_text) 
+
         try:
             db.session.add(new_task)
             db.session.commit()
             return redirect('/')
         except:
             return 'There was an issue adding your fact!!'
+        os.remove('temp.musicxml')
+        os.remove('result.abc')
+
 
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
