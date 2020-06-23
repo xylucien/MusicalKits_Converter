@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE
 import os, io
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '///musicxmlCache'
+UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache')
 ALLOWED_EXTENSIONS = {'musicxml'}
 
 app = Flask(__name__)
@@ -71,6 +71,7 @@ def index():
         tasks = Convert.query.order_by(Convert.date_created).all()
         return render_template('index.html', tasks=tasks)
 
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_file(): 
     #still in development
     if request.method == 'POST':
@@ -87,8 +88,8 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
-    return render_template('upload.html')
+            return render_template("upload.html")
+    return render_template('index.html')
 
 @app.route('/delete/<int:id>')
 def delete(id):
