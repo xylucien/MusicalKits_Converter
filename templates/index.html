@@ -29,24 +29,28 @@
                 <td>
                     <a href="/delete/{{task.id}}">Delete</a>
                     <br>
-                    <a href="/update/{{task.id}}">Update</a>
+                    <a href="/update/{{task.id}}">Convert</a>
                 </td>
             </tr>
         {% endfor %}
 
-        
+
     </table>
     {% endif %}
 
-    <div class="form">
+    <br>
+
+    <div class="form" style="text-align: center;">
         <form action="/" method="POST" id="input">
             <textarea name="content" id="content" form="input" rows="8" cols="50"></textarea>
-            <input type="submit" value="Submit!">
+            <input type="submit" value="Submit">
         </form>
     </div>
+    
+    <br>
 
     <div>
-        <form action="/upload" method="POST" enctype=multipart/form-data>
+        <form action="/upload" method="POST" enctype=multipart/form-data style="text-align: center;">
             <input type=file name=file>
             <input type=submit value=Upload>
         </form>
