@@ -13,6 +13,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDataBase.db'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
+output_file = 'result.abc'
+input_file = 'temp.musicxml'
 
 class Convert(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,41 +37,42 @@ def index():
         
         #get user input and write into a file
         task_content = request.form['content']
-        temp_inputfile = io.open("temp.musicxml", "w+", encoding='utf-8')
-        temp_inputfile.write(task_content)
-        temp_inputfile.close()
+        with io.open("temp.musicxml", "w+", encoding='utf-8') as temp_inputfile:
+            temp_inputfile.write(task_content)
         
         #execute the converter script and listen for result
-        process = Popen(['python', 'xml2abc.py', 'temp.musicxml'], stdout=PIPE, stderr = PIPE, encoding='utf-8')
+        process = Popen(['./xml2abc.py', 'temp.musicxml'], stdout=PIPE, stderr = PIPE, encoding='utf-8')
         stdout, stderr = process.communicate()
         result = stdout
         
-
-        if(process.returncode!=0): #display error message
+        #display error message
+        if(process.returncode!=0): 
             result = stderr + '\n' + "There is something wrong with your input. Please check again!\n"
-        else: #write result text into a file for future access
-            temp_outputfile = io.open("result.abc", "r+", encoding='utf-8')
-            converted_text = temp_outputfile.read()
-            temp_outputfile.close()
+        #write result text into a file for future access
+        else: 
+            with io.open(output_file, "r+", encoding='utf-8') as temp_outputfile:
+                converted_text = temp_outputfile.read()
         
         #put result in a new Convert instance
         new_task = Convert(content= result + converted_text) 
-
         try:
             db.session.add(new_task)
             db.session.commit()
             return redirect('/')
         except:
             return 'There was an issue appending the result!!'
-        os.remove('temp.musicxml')
-        os.remove('result.abc')
-
+        try:
+            os.remove(input_file)
+            os.remove(output_file)
+        except OSError as error: 
+            print(error + 'n' + "File path can not be removed") 
 
     else:
         tasks = Convert.query.order_by(Convert.date_created).all()
         return render_template('index.html', tasks=tasks)
 
-def upload_file(): #still in development
+def upload_file(): 
+    #still in development
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -114,6 +117,5 @@ def update(id):
     else:
         return render_template('update.html', task=task)
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
