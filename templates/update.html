@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Task Master</title>
+<title>Result Page</title>
 {% endblock %}
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">Update Task</h1>
+    <h1 style="text-align: center">Result</h1>
 
     <div class="form">
         <form action="/update/{{task.id}}" method="POST">
             <textarea name="content" id="content" rows="15" cols="160">{{task.content}}</textarea>
-            <input type="submit" value="Update">
+            <a href="/">Return</a>
         </form>
     </div>
 </div>

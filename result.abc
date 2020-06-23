@@ -1,38 +1,34 @@
 X:1
-T:West Point
-C:Jonatha Brooke
-Z:© 1995 Dog Dream Music. All rights reserved.
-%%score 1 2
+T:Excerpt from Magnificat secundi toni
+C:Gilles Binchois
+Z:Copyright © 2010 MakeMusic, Inc.
+%%score [ 1 | ( 2 3 ) ]
 L:1/8
-Q:1/4=84
-M:4/4
+Q:1/4=60
+M:none
 I:linebreak $
-K:F#
-V:1 treble nm="Voice"
-V:2 tab stafflines=6 strings=D2,A2,D3,G3,B3,D4 capo=4 nostems nm="Guitar"
-L:1/16
+K:F
+U:s=!stemless!
+V:1 bass nm="Cantus"
+V:2 bass nm="Cantus 2 and Tenor"
+V:3 bass 
 V:1
- z8 | z8 | z8 | z8 |$ z8 | z8 | z8 | z8 | z8 |$ z4 z2 FA | G/GGGG/- G<F FA | G>F- FE- E2 z D/E/ |$ %12
-w: |||||||||I'm re-|tra- vel- ling this life- * line that's so|close to _ home _ We are|
- F/EFA,G,/- G,<F, z D/E/ | F/E/ z D2 A,/G,F,B,A,/ |$ A, z F/G/A- A4- | A4 z3/2 A,/ A,/A,A,/- | %16
-w: on our way to West _ Point Where your|per- fect, blond cou- sin will throw his|hat in the air _|_ And we will watch|
- A,/G,F,/- F,6 | %17
-w: _ it fall _|
+"^Chorus" sC2 sD2 (sC2 sF2) sF2 |[K:F][M:3/4]"^(C.)" z2 z2 F2 | F G2 E D>C | C2 z2 F,A,- | %4
+w: Ma- gni- fi- * cat|A-|ni- ma * me- *|a do- *|
+ A,F,CA, G,2 | F,2 z F E>D | FE- E/D/D !courtesy!^C!courtesy!=B,/C/ | D6 ||$ D2 CFED | F2 F2 F2 | %10
+w: ||* * * * mi- * * *|num.|Et * * * *|ex- ul- ta-|
+ F2 !fermata!E2 z2 | E3 D FE | CB,/C/ D3 C | A,2 B,3 A, | A,3 G, G,F, | !fermata!A,4 z2 | E2 F3 D | %17
+w: vit *|spi- * ri- *|* * * tus *|me- * *||us|in * *|
 V:2
-"Bmaj7/D#""^Tuning D-A-D-G-B-D, Capo 4th fret" !5!C, !5!D,2 !3!B,2 !4!A, !5!D,3 !3!B,2 !4!A, !5!D, !5!C,3 | %1
- !5!C, !5!D,2 !3!B,2 !4!A, !5!D,3 !3!B,2 !4!A, !5!D, !5!C,3 | %2
-"Bmaj7" [!6!B,,!5!F,!4!A,!3!B,]3 [!2!F!1!F]3 [!6!B,,!5!F,!4!A,!3!B,]3 [!2!F!1!F]3 [!6!B,,!5!F,!4!A,!3!B,] !2!D3 | %3
- [!6!B,,!5!F,!4!A,!3!B,]3 [!2!F!1!F]3 [!6!B,,!5!F,!4!A,] !4!F,2 !5!F,2 !5!F, !5!E, !5!C,3 |$ %4
-"G#m9" !6!F,, !6!G,,2 [!4!A,!3!B,!2!D!1!F]3 [!6!G,,!5!D,!4!A,!3!B,]3 [!4!A,!3!B,!2!D!1!F]3 [!6!G,,!5!D,!4!A,!3!B,] [!4!A,!3!B,!2!D!1!F]2 !6!G,, | %5
- !6!F,, !6!G,,2 [!6!G,,!5!D,!4!A,]3 [!6!G,,!5!D,!4!A,!3!B,]3 [!4!A,!3!B,!2!D!1!F]3 [!6!G,,!5!D,!4!A,!3!B,] [!4!A,!3!B,!2!D!1!F]2 !6!G,, | %6
-"F#" [!6!F,,!5!C,]3 !4!A,3"C#7sus4" [!5!C,!4!G,!3!B,]3 [!4!G,!3!B,!2!F!1!F]3 [!5!C,!4!G,!3!B,] !4!F,3 | %7
-"F#" [!6!F,,!5!C,]3 !4!A,3"C#7sus4" [!5!C,!4!G,!3!B,]3 [!4!G,!3!B,!2!F!1!F]3 [!5!C,!4!G,!3!B,] !4!F,3 | %8
-"F#" [!6!F,,!5!C,]3 !4!A,3"C#7sus4" [!5!C,!4!G,!3!B,]3 [!4!G,!3!B,!2!F!1!F]3 [!5!C,!4!G,!3!B,] !4!F,3 |$ %9
- [!6!F,,!5!C,]3 !4!A,3 [!5!C,!4!G,!3!B,]3 [!4!G,!3!B,!2!F!1!F]3 [!5!C,!4!G,!3!B,] !4!F,3 | %10
- !5!C, !5!D,2 !3!B,2 !4!A, !5!D,3 !3!B,2 !4!A, !5!D, !5!C,3 | %11
- !5!C, !5!D,2 !3!B,2 !4!A, !5!D,3 !3!B,2 !4!A, !5!D, !5!C,3 |$ %12
- [!6!B,,!5!F,!4!A,!3!B,]3 [!2!F!1!F]3 [!6!B,,!5!F,!4!A,!3!B,]3 [!2!F!1!F]3 [!6!B,,!5!F,!4!A,!3!B,] !2!D3 | %13
- [!6!B,,!5!F,!4!A,!3!B,]3 [!2!F!1!F]3 [!6!B,,!5!F,!4!A,] !4!F,2 !5!F,2 !5!F, !5!E, !5!C,3 |$ %14
- !6!F,, !6!G,,2 [!4!A,!3!B,!2!D!1!F]3 [!6!G,,!5!D,!4!A,!3!B,]3 [!4!A,!3!B,!2!D!1!F]3 [!6!G,,!5!D,!4!A,!3!B,] [!4!A,!3!B,!2!D!1!F]2 !6!G,, | %15
- !6!F,, !6!G,,2 [!6!G,,!5!D,!4!A,]3 [!6!G,,!5!D,!4!A,!3!B,]3 [!4!A,!3!B,!2!D!1!F]3 [!6!G,,!5!D,!4!A,!3!B,] [!4!A,!3!B,!2!D!1!F]2 !6!G,, | %16
- [!6!F,,!5!C,]3 !4!A,3 [!5!C,!4!G,!3!B,]3 [!4!G,!3!B,!2!F!1!F]3 [!5!C,!4!G,!3!B,] !4!F,3 | %17
+ z10 |[K:F][M:3/4]"^(CT.)" z2 z2 F,2 | D,C, E,2 F,G, | A,2 F, A,2 F, | CA, F,2 z B, | %5
+w: |A-|ni- * ma me- *|* a do- *||
+ A, C2 A, G,2 | F,C,D,F, E,2 | D,6 ||$"^CT.(instr.)""_T.(instr.)" A,3 F, B,2 | C2 A,G, B,2 | %10
+w: |* mi- * * *|num.|||
+ B,2 CB, !fermata!G,2 | C,4 B,,2 | A,,2 A,3 F, | F,2 z2 E,E,- | E,F, D, D,2 C, | !fermata!E,4 z2 | %16
+w: ||||||
+ A,,2 A,3 F, | %17
+w: |
+V:3
+ x10 |[K:F][M:3/4] z2 z2 F,2 | D,C, E,2 F,G, | A,2 F, A,2 F, | CA, F,2 z B, | A, C2 A, G,2 | %6
+ F,C,D,F, E,2 | D,6 ||$ D,2 F,A, G,2 | F,2 F,F, D,2 | D,2 !fermata!C,4 | G,3 F, D,2 | E,2 D,4 | %13
+ D,4 C,2- | C,2 B,,4 | !fermata!A,,4 z2 | C,2 D,4 | %17
