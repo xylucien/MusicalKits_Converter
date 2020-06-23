@@ -41,7 +41,7 @@ def index():
             temp_inputfile.write(task_content)
         
         #execute the converter script and listen for result
-        process = Popen(['./xml2abc.py', 'temp.musicxml'], stdout=PIPE, stderr = PIPE, encoding='utf-8')
+        process = Popen(['python', 'xml2abc.py', 'temp.musicxml'], stdout=PIPE, stderr = PIPE, encoding='utf-8')
         stdout, stderr = process.communicate()
         result = stdout
         
