@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash, send_file, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from subprocess import Popen, PIPE
@@ -34,6 +34,7 @@ def allowed_file(filename):
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    #try to clean temp files every single time - may need to improve
     try:
         os.remove(os.path.join(os.getcwd(),input_file))
     except:
@@ -42,6 +43,7 @@ def index():
         os.remove(os.path.join(os.getcwd(),output_file))
     except:
         pass
+
     if request.method == 'POST':
         task_content = request.form['content']
         if task_content == '':
@@ -145,6 +147,14 @@ def update(id):
 
     else:
         return render_template('update.html', task=new_task)
+
+@app.route('/return-files/')
+def return_files_tut():
+    try:
+        return send_file(output_file, attachment_filename="result.abc" ,as_attachment=True)
+    except Exception as e:
+        flash(str(e))
+        return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
