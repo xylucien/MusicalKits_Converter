@@ -34,6 +34,14 @@ def allowed_file(filename):
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    try:
+        os.remove(os.path.join(os.getcwd(),input_file))
+    except:
+        pass
+    try:
+        os.remove(os.path.join(os.getcwd(),output_file))
+    except:
+        pass
     if request.method == 'POST':
         task_content = request.form['content']
         if task_content == '':
@@ -47,11 +55,6 @@ def index():
             return redirect('/')
         except:
             return 'There was an issue appending the result!!'
-        try:
-            os.remove(input_file)
-            os.remove(output_file)
-        except OSError as error: 
-            flash(error + 'n' + "File path can not be removed") 
 
     else:
         tasks = Convert.query.order_by(Convert.date_created).all()
