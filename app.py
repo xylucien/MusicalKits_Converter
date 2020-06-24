@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from subprocess import Popen, PIPE
-import os, io
+import os, io, sys
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache')
@@ -16,7 +16,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 output_file = 'result.abc'
-input_file = 'temp.musicxml'
+input_file = 'temp_input.musicxml'
 
 class Convert(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,6 +35,11 @@ def allowed_file(filename):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
+        task_content = request.form['content']
+        if task_content == '':
+            flash('You cannot submit empty text!')
+            return redirect('/')
+        
         new_task = Convert(content = task_content)
         try:
             db.session.add(new_task)
@@ -84,11 +89,18 @@ def delete(id):
     task_to_delete = Convert.query.get_or_404(id)
 
     try:
+        if task_to_delete.is_file != 0:
+            try:
+                os.remove(os.path.join(UPLOAD_FOLDER,task_to_delete.content))
+            except NameError as error: 
+                flash(str(error) + 'n' + "File cannot be removed") 
         db.session.delete(task_to_delete)
         db.session.commit()
         return redirect('/')
     except:
-        return 'There was a problem deleting that fact!'
+        #e = sys.exc_info()[1]
+        flash('There was a problem deleting that task!' + str(e))
+        return redirect('/')
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -99,11 +111,11 @@ def update(id):
     if task.is_file == 0:
         #get user input and write into a file
         task_content = task.content
-        with io.open("temp.musicxml", "w+", encoding='utf-8') as temp_inputfile:
+        with io.open(input_file, "w+", encoding='utf-8') as temp_inputfile:
             temp_inputfile.write(task_content)
         
         #execute the converter script and listen for result
-        process = Popen(['python', 'xml2abc.py', 'temp.musicxml'], stdout=PIPE, stderr = PIPE, encoding='utf-8')
+        process = Popen(['python', 'xml2abc.py', input_file], stdout=PIPE, stderr = PIPE, encoding='utf-8')
     
     #if user uploaded a file
     else:
@@ -113,7 +125,7 @@ def update(id):
     result = stdout
     
     #display error message
-    if(process.returncode!=0): 
+    if(process.returncode!=0 or result == ''): 
         result = stderr + '\n' + "There is something wrong with your input. Please check again!\n"
     #write result text into a file for future access
     else: 
@@ -121,6 +133,8 @@ def update(id):
             converted_text = temp_outputfile.read()
     
     #put result in a new Convert instance
+    if converted_text == '':
+        result = "There is something wrong with your input. Please check again!\n"
     new_task = Convert(content= result + converted_text) 
 
     if request.method == 'POST':
