@@ -437,7 +437,7 @@ class ABCoutput:
             f = io.open("result.abc", "w+", encoding='utf-8')
             f.write(str)
             f.close()
-            print("finished! Result saved at result.abc")
+            print("Conversion successful! Click the download button below to receive your converted score in abc notation.")
         elif not python3: s.outfile.write (str.encode ('utf-8'))
         else: s.outfile.write (str) 
         if s.pad: s.outfile.close ()                # close each file with -o option

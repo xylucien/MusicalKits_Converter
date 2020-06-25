@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Task Master</title>
+<title>Lucien's Converter</title>
 {% endblock %}
 
 {% block body %}
@@ -10,31 +10,53 @@
     {% if tasks|length < 1 %}
     <h4 style="text-align: center">Try it out!</h4>
     {% else %}
-    <table>
+    <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
         <tr>
             <th>Task</th>
-            <th>Added</th>
+            <th style="width: 20;">Timestamp</th>
             <th>Actions</th>
         </tr>
         {% for task in tasks %}
             <tr>
-                <textarea rows="8" cols="60">{{ task.content }}</textarea>
-                <td>{{ task.date_created.date() }}</td>
                 <td>
+                    <textarea rows="8" cols="60">{{ task.content }}</textarea>
+                </td>
+                
+                <td>
+                    {{ task.date_created.date() }}
+                </td>
+                
+                <td>
+                    <!----- unused for now
                     <a href="/delete/{{task.id}}">Delete</a>
                     <br>
-                    <a href="/update/{{task.id}}">Update</a>
+                    ----->
+                    <a href="/convert_result/{{task.id}}">Convert</a>
                 </td>
             </tr>
         {% endfor %}
+
+
     </table>
     {% endif %}
 
-    <div class="form">
-        <form action="/" method="POST" id="input">
+    <br>
+
+    <div class="form" style="text-align: center;">
+        <form action="/submission" method="POST" id="input">
             <textarea name="content" id="content" form="input" rows="8" cols="50"></textarea>
-            <input type="submit" value="Submit!">
+            <input type="submit" value="Submit">
         </form>
     </div>
+    
+    <br>
+
+    <div>
+        <form action="/upload" method="POST" enctype=multipart/form-data style="text-align: center;">
+            <input type=file name=file>
+            <input type=submit value=Upload>
+        </form>
+    </div>
+
 </div>
 {% endblock %}

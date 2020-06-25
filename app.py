@@ -1,26 +1,28 @@
-from flask import Flask, render_template, url_for, request, redirect
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask import Flask, render_template, url_for, request, redirect, flash, send_file, send_from_directory
+from flask_sqlalchemy import SQLAlchemy
 from subprocess import Popen, PIPE
-import os, io
 from werkzeug.utils import secure_filename
+import io, os, sys, tempfile
 
-UPLOAD_FOLDER = '///musicxmlCache'
+UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache')
 ALLOWED_EXTENSIONS = {'musicxml'}
 
+#initialize app and create session (flash function is disabled without a secret key)
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDataBase.db'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 output_file = 'result.abc'
-input_file = 'temp.musicxml'
 
 class Convert(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.TEXT, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
+    is_file = db.Column(db.Integer, default=0)
     def __repr__(self):
         return '<Task %r>' % self.id
 
@@ -30,92 +32,150 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+#helper function
+
+#put result in a new Convert instance
+def generate_result(result, converted_text):
+    if not converted_text:
+        result = "There is something wrong with your input. Please check again!\n"
+    flash(result)
+    return Convert(content=converted_text) 
+
+#secure file name and save to data folder
+def handleFileSave(raw_file):
+    filename = secure_filename(raw_file.filename)
+    raw_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return filename
+
+#get user input and write into a temp file
+def handleTempInput(text_to_write):
+    temp_inputfile = tempfile.NamedTemporaryFile(mode='w+', 
+        encoding='utf-8', delete=True, suffix='.musicxml')
+    temp_inputfile.write(text_to_write)
+    return temp_inputfile
+
+#thinking about how to implement
+def handleTempOutput():
+    pass
+
+#create a new Convert instance
+def createNewTask(content, is_file = 0):
+    new_task = Convert(content = content, is_file = is_file)
+    db.session.add(new_task)
+    db.session.commit()
+    return new_task    
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if request.method == 'POST':
-        converted_text = ''
-        
-        #get user input and write into a file
-        task_content = request.form['content']
-        with io.open("temp.musicxml", "w+", encoding='utf-8') as temp_inputfile:
-            temp_inputfile.write(task_content)
-        
-        #execute the converter script and listen for result
-        process = Popen(['python', 'xml2abc.py', 'temp.musicxml'], stdout=PIPE, stderr = PIPE, encoding='utf-8')
-        stdout, stderr = process.communicate()
-        result = stdout
-        
-        #display error message
-        if(process.returncode!=0): 
-            result = stderr + '\n' + "There is something wrong with your input. Please check again!\n"
-        #write result text into a file for future access
-        else: 
-            with io.open(output_file, "r+", encoding='utf-8') as temp_outputfile:
-                converted_text = temp_outputfile.read()
-        
-        #put result in a new Convert instance
-        new_task = Convert(content= result + converted_text) 
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an issue appending the result!!'
-        try:
-            os.remove(input_file)
-            os.remove(output_file)
-        except OSError as error: 
-            print(error + 'n' + "File path can not be removed") 
+    return render_template('index.html')
 
-    else:
-        tasks = Convert.query.order_by(Convert.date_created).all()
-        return render_template('index.html', tasks=tasks)
-
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_file(): 
-    #still in development
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
+            flash('No file found!')
+            return redirect('/')
+        
         file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
-    return render_template('upload.html')
+        if not file.filename:
+            flash('No selected file!')
+            return redirect('/')
 
+        #if upload is valid
+        if file and allowed_file(file.filename):
+            filename = handleFileSave(file)
+
+            # prompt that upload is successful
+            return render_template("upload.html", 
+                task = createNewTask(filename, 1))
+    
+    return redirect('/')
+
+@app.route('/submission', methods=['GET', "POST"])
+def submit_text():
+    if request.method == 'POST':
+        task_content = request.form['content']
+
+        #check for empty submission
+        if not task_content:
+            flash('You cannot submit empty text!')
+            return redirect('/')
+
+        # prompt that submission is successful
+        return render_template('submission.html', 
+            task = createNewTask(task_content))
+    
+    return redirect('/')    
+
+#saved for future re-designing this functionality
+'''
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Convert.query.get_or_404(id)
 
     try:
+        if task_to_delete.is_file != 0:
+            try:
+                os.remove(os.path.join(UPLOAD_FOLDER,task_to_delete.content))
+            except NameError as error: 
+                flash(str(error) + 'n' + "File cannot be removed") 
         db.session.delete(task_to_delete)
         db.session.commit()
         return redirect('/')
     except:
-        return 'There was a problem deleting that fact!'
+        flash('There was a problem deleting that task!' + str(e))
+        return redirect('/')
+'''
 
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id):
+@app.route('/convert_result/<int:id>', methods=['GET', 'POST'])
+def to_convert(id):
     task = Convert.query.get_or_404(id)
+    converted_text = ''
+
+    #if user copy-pasted
+    if task.is_file == 0:
+        temp_inputfile = handleTempInput(task.content)
+        target_path = temp_inputfile.name
+    #if user uploaded a file
+    else:
+        target_path = os.path.join(UPLOAD_FOLDER, task.content)
+    
+    #execute the converter script and listen for result
+    process = Popen(['python3', 'xml2abc.py', target_path], 
+        stdout=PIPE, stderr = PIPE, encoding='utf-8')
+    
+    #listen for success message
+    stdout, stderr = process.communicate()
+    result = stdout
+
+    #display error message
+    if(process.returncode!=0 or not result): 
+        result = stderr + '\n' + "There is something wrong with your input. Please check again!\n"
+    #write result text into a file for future access
+    else: 
+        with io.open(output_file, "r+", encoding='utf-8') as temp_outputfile:
+            converted_text = temp_outputfile.read()
+    
+    #temp file automatically deleted on close()
+    if task.is_file == 0: temp_inputfile.close()
 
     if request.method == 'POST':
-        task.content = request.form['content']
-
-        try:
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an issue updating your fact!'
+        return redirect('/')
 
     else:
-        return render_template('update.html', task=task)
+        return render_template('convert_result.html', 
+            task=generate_result(result, converted_text))
+
+@app.route('/return-files/')
+def return_files_tut():
+    try:
+        return send_file(output_file, attachment_filename="result.abc" ,as_attachment=True)
+    except Exception as e:
+        flash(str(e))
+        return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
