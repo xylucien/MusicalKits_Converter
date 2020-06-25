@@ -33,16 +33,41 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 #helper function
+
+#put result in a new Convert instance
 def generate_result(result, converted_text):
-    #put result in a new Convert instance
     if not converted_text:
         result = "There is something wrong with your input. Please check again!\n"
-    return Convert(content= result + converted_text) 
+    flash(result)
+    return Convert(content=converted_text) 
+
+#secure file name and save to data folder
+def handleFileSave(raw_file):
+    filename = secure_filename(raw_file.filename)
+    raw_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return filename
+
+#get user input and write into a temp file
+def handleTempInput(text_to_write):
+    temp_inputfile = tempfile.NamedTemporaryFile(mode='w+', 
+        encoding='utf-8', delete=True, suffix='.musicxml')
+    temp_inputfile.write(text_to_write)
+    return temp_inputfile
+
+#thinking about how to implement
+def handleTempOutput():
+    pass
+
+#create a new Convert instance
+def createNewTask(content, is_file = 0):
+    new_task = Convert(content = content, is_file = is_file)
+    db.session.add(new_task)
+    db.session.commit()
+    return new_task    
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    tasks = Convert.query.order_by(Convert.date_created).all()
-    return render_template('index.html', tasks=tasks)
+    return render_template('index.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file(): 
@@ -61,32 +86,28 @@ def upload_file():
 
         #if upload is valid
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            new_task = Convert(content = filename, is_file = 1)
-            db.session.add(new_task)
-            db.session.commit()
+            filename = handleFileSave(file)
 
             # prompt that upload is successful
-            # may add more features in this page later
-            return render_template("upload.html")
+            return render_template("upload.html", 
+                task = createNewTask(filename, 1))
+    
     return redirect('/')
 
 @app.route('/submission', methods=['GET', "POST"])
 def submit_text():
     if request.method == 'POST':
         task_content = request.form['content']
+
+        #check for empty submission
         if not task_content:
             flash('You cannot submit empty text!')
             return redirect('/')
 
-        new_task = Convert(content = task_content)
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return render_template('submission.html')
-        except:
-            flash('There was an issue appending the result!!')
+        # prompt that submission is successful
+        return render_template('submission.html', 
+            task = createNewTask(task_content))
+    
     return redirect('/')    
 
 #saved for future re-designing this functionality
@@ -116,18 +137,18 @@ def to_convert(id):
 
     #if user copy-pasted
     if task.is_file == 0:
-        #get user input and write into a temp file
-        temp_inputfile = tempfile.NamedTemporaryFile(mode='w+', encoding='utf-8', delete=True, suffix='.musicxml')
-        temp_inputfile.write(task.content)
+        temp_inputfile = handleTempInput(task.content)
         target_path = temp_inputfile.name
     #if user uploaded a file
     else:
         target_path = os.path.join(UPLOAD_FOLDER, task.content)
     
     #execute the converter script and listen for result
-    process = Popen(['python3', 'xml2abc.py', target_path], stdout=PIPE, stderr = PIPE, encoding='utf-8')
-    stdout, stderr = process.communicate()
+    process = Popen(['python3', 'xml2abc.py', target_path], 
+        stdout=PIPE, stderr = PIPE, encoding='utf-8')
     
+    #listen for success message
+    stdout, stderr = process.communicate()
     result = stdout
 
     #display error message
@@ -145,7 +166,8 @@ def to_convert(id):
         return redirect('/')
 
     else:
-        return render_template('convert_result.html', task=generate_result(result, converted_text))
+        return render_template('convert_result.html', 
+            task=generate_result(result, converted_text))
 
 @app.route('/return-files/')
 def return_files_tut():
