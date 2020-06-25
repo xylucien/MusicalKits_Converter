@@ -27,9 +27,11 @@
                 </td>
                 
                 <td>
+                    <!----- unused for now
                     <a href="/delete/{{task.id}}">Delete</a>
                     <br>
-                    <a href="/update/{{task.id}}">Convert</a>
+                    ----->
+                    <a href="/convert_result/{{task.id}}">Convert</a>
                 </td>
             </tr>
         {% endfor %}
@@ -41,7 +43,7 @@
     <br>
 
     <div class="form" style="text-align: center;">
-        <form action="/" method="POST" id="input">
+        <form action="/submission" method="POST" id="input">
             <textarea name="content" id="content" form="input" rows="8" cols="50"></textarea>
             <input type="submit" value="Submit">
         </form>
