@@ -89,7 +89,6 @@ def upload_file():
             filename = handleFileSave(file)
 
             # prompt that upload is successful
-            #new_task = createNewTask(filename, 1)
             return redirect('convert_result/'+str(createNewTask(filename, 1).id))
         else:
             flash('File extention name not valid!')
