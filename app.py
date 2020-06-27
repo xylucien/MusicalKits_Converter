@@ -89,10 +89,9 @@ def upload_file():
             filename = handleFileSave(file)
 
             # prompt that upload is successful
-            return redirect('convert_result/'+str(createNewTask(filename, 1).id))
-        else:
-            flash('File extention name not valid!')
-            return redirect('/')
+            return render_template("upload.html", 
+                task = createNewTask(filename, 1))
+    
     return redirect('/')
 
 @app.route('/submission', methods=['GET', "POST"])
@@ -106,9 +105,30 @@ def submit_text():
             return redirect('/')
 
         # prompt that submission is successful
-        return redirect('convert_result/'+str(createNewTask(task_content).id))
+        return render_template('submission.html', 
+            task = createNewTask(task_content))
     
     return redirect('/')    
+
+#saved for future re-designing this functionality
+'''
+@app.route('/delete/<int:id>')
+def delete(id):
+    task_to_delete = Convert.query.get_or_404(id)
+
+    try:
+        if task_to_delete.is_file != 0:
+            try:
+                os.remove(os.path.join(UPLOAD_FOLDER,task_to_delete.content))
+            except NameError as error: 
+                flash(str(error) + 'n' + "File cannot be removed") 
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return redirect('/')
+    except:
+        flash('There was a problem deleting that task!' + str(e))
+        return redirect('/')
+'''
 
 @app.route('/convert_result/<int:id>', methods=['GET', 'POST'])
 def to_convert(id):
@@ -133,7 +153,7 @@ def to_convert(id):
 
     #display error message
     if(process.returncode!=0 or not result): 
-        result = stderr + '\n' + "There is something wrong with your input. Please check again!"
+        result = stderr + '\n' + "There is something wrong with your input. Please check again!\n"
     #write result text into a file for future access
     else: 
         with io.open(output_file, "r+", encoding='utf-8') as temp_outputfile:
