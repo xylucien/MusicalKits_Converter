@@ -5,41 +5,38 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
-    <h1 style="text-align: center">Lucien's Simple MusicXML to ABC Notation Converter</h1>
-    {% if tasks|length < 1 %}
-    <h4 style="text-align: center">Try it out!</h4>
-    {% else %}
-    <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
-        <tr>
-            <th>Task</th>
-            <th style="width: 20;">Timestamp</th>
-            <th>Actions</th>
-        </tr>
-        {% for task in tasks %}
-            <tr>
-                <td>
-                    <textarea rows="8" cols="60">{{ task.content }}</textarea>
-                </td>
-                
-                <td>
-                    {{ task.date_created.date() }}
-                </td>
-                
-                <td>
-                    <!----- unused for now
-                    <a href="/delete/{{task.id}}">Delete</a>
-                    <br>
-                    ----->
-                    <a href="/convert_result/{{task.id}}">Convert</a>
-                </td>
-            </tr>
-        {% endfor %}
+<div class="content" style="
+    text-align: center;
+">
+    <h1 style="text-align: center">MusicXML to ABC Notation Converter</h1>
 
 
-    </table>
-    {% endif %}
+    <ul style="list-style-type:none;display: inline-flex;text-align: center;padding: 20px 20px;outline-style: none;">
+        <li style="background:rgba(61,153,245,1);height: 300px;width: 240px;border-width: 10px;border-color: white;margin-inline-end: 40px;" class="sc-1jhrmy1-0 hpzLVg">
+            <div class="sc-1jhrmy1-2 hpQFdy">
+                <div class="sc-2xfn8l-0 bxyVaO sc-1nz7oec-0 dTTiwf" style="height:36px; width:36px">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 36 36" fill="#000">
+                        <path d="M17,25 L17,31 L31,31 L31,13 L21,13 L21,19 L29,19 L29,21 L21,21 L21,23 L29,23 L29,25 L19,25 L17,25 Z M15,25 L3,25 L3,3 L21,3 L21,11 L33,11 L33,33 L15,33 L15,25 Z M19,21 L19,19 L19,5 L5,5 L5,23 L19,23 L19,21 Z M19,27 L29,27 L29,29 L19,29 L19,27 Z"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="sc-1jhrmy1-3 hpZbHH">Convert PDFs to editable Word documents</div>
+            <a class="lqkt1b-0 fdItuc sc-1jhrmy1-1 hpIizp" href="/">Upload File</a>
+        </li>   
+        
+        <li style="background:rgb(37, 0, 248);height: 300px;width: 240px;border-width: 10px;border-color: white;" class="sc-1jhrmy1-0 hpzLVg">
+            <div class="sc-1jhrmy1-2 hpQFdy">
+                <div class="sc-2xfn8l-0 bxyVaO sc-1nz7oec-0 dTTiwf" style="height:36px; width:36px">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 36 36" fill="#000">
+                        <path d="M29,9 L22.4572727,9 L25,11.3981138 L23.3015152,13 L18,8 L23.3015152,3 L25,4.60188621 L22.4572727,7 L31,7 L31,9 L31,15 L29,15 L29,9 Z M7,27 L13.5427273,27 L11,24.6018862 L12.6984848,23 L18,28 L12.6984848,33 L11,31.3981138 L13.5427273,29 L5,29 L5,27 L5,21 L7,21 L7,27 Z M3,3 L15,3 L15,19 L3,19 L3,3 Z M21,17 L33,17 L33,33 L21,33 L21,17 Z M5,17 L13,17 L13,5 L5,5 L5,17 Z M23,31 L31,31 L31,19 L23,19 L23,31 Z"></path>                    
+                    </svg>
+                </div>
+            </div>
+            <div class="sc-1jhrmy1-3 hpZbHH">Convert PDFs to  Word documents</div>
+            <a class="lqkt1b-0 fdItuc sc-1jhrmy1-1 hpIizp" href="/">Submit Text</a>
+        </li>  
 
+    </ul>
     <br>
 
     <div class="form" style="text-align: center;">
@@ -52,9 +49,9 @@
     <br>
 
     <div>
-        <form action="/upload" method="POST" enctype=multipart/form-data style="text-align: center;">
-            <input type=file name=file>
-            <input type=submit value=Upload>
+        <form action="/upload" method="POST" enctype="multipart/form-data" style="text-align: center;">
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
         </form>
     </div>
 
