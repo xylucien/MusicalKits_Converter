@@ -1,32 +1,31 @@
+{% from 'bootstrap/utils.html' import render_messages %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    {% block head %}{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MusicXml to ABC Notation</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    {{ bootstrap.load_css() }}
+    {% block head %}
+    {% endblock %}
 </head>
+<body style="    
+  background-image:url('https://images.unsplash.com/photo-1551503766-ac63dfa6401c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjExMzk2fQ&auto=format&fit=crop&w=1950&q=80')
+">
+    <main class="container">
+        {{ render_messages(container=False, dismissible=True) }}
+        {% block body %}
+        {% endblock %}
+    </main>
 
+    <footer class="text-center">
+        {% block footer %}
+            <small> &copy; 2020 <a href="http://google.com" title="by Lucien Liu">Lucien</a>
+            </small>
+        {% endblock %}
+    </footer>
 
-<body>
-    <div class="container" style="min-height:100% width:80%">
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-warning alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                {{message}}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        
-        {% block body %}{% endblock %}
-        </div>
-    
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    {{ bootstrap.load_js() }}
 </body>
 </html>

@@ -1,8 +1,18 @@
 from datetime import datetime
-from flask import Flask, render_template, url_for, request, redirect, flash, send_file, send_from_directory
+from flask import Flask, render_template, url_for, request, redirect, flash, send_file, send_from_directory, Markup
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
+    FormField, SelectField, FieldList
+from wtforms.validators import DataRequired, Length
+from wtforms.fields import *
+
+from flask_bootstrap import Bootstrap
+
 from flask_sqlalchemy import SQLAlchemy
 from subprocess import Popen, PIPE
 from werkzeug.utils import secure_filename
+
 import io, os, sys, tempfile
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache')
@@ -11,6 +21,8 @@ ALLOWED_EXTENSIONS = {'musicxml'}
 #initialize app and create session (flash function is disabled without a secret key)
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+
+bootstrap = Bootstrap(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDataBase.db'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -38,7 +50,7 @@ def allowed_file(filename):
 def generate_result(result, converted_text):
     if not converted_text:
         result = "There is something wrong with your input. Please check again!\n"
-    flash(result)
+    flash(result, 'info')
     return Convert(content=converted_text) 
 
 #secure file name and save to data folder
@@ -74,14 +86,14 @@ def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file found!')
+            flash('No file found!', 'danger')
             return redirect('/')
         
         file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
         if not file.filename:
-            flash('No selected file!')
+            flash('No selected file!', 'danger')
             return redirect('/')
 
         #if upload is valid
@@ -91,7 +103,7 @@ def upload_file():
             # prompt that upload is successful
             return redirect('convert_result/'+str(createNewTask(filename, 1).id))
         else:
-            flash('File extention name not valid!')
+            flash('File extention name not valid!', 'danger')
             return redirect('/')
     return redirect('/')
 
@@ -102,7 +114,7 @@ def submit_text():
 
         #check for empty submission
         if not task_content:
-            flash('You cannot submit empty text!')
+            flash('You cannot submit empty text!', 'warning')
             return redirect('/')
 
         # prompt that submission is successful
@@ -154,7 +166,7 @@ def return_files_tut():
     try:
         return send_file(output_file, attachment_filename="result.abc" ,as_attachment=True)
     except Exception as e:
-        flash(str(e))
+        flash(str(e), 'danger')
         return redirect('/')
 
 if __name__ == "__main__":
