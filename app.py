@@ -1,18 +1,8 @@
 from datetime import datetime
-from flask import Flask, render_template, url_for, request, redirect, flash, send_file, send_from_directory, Markup
-
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
-    FormField, SelectField, FieldList
-from wtforms.validators import DataRequired, Length
-from wtforms.fields import *
-
-from flask_bootstrap import Bootstrap
-
+from flask import Flask, render_template, url_for, request, redirect, flash, send_file, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from subprocess import Popen, PIPE
 from werkzeug.utils import secure_filename
-
 import io, os, sys, tempfile
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache')
@@ -26,8 +16,6 @@ except OSError as e:
 #initialize app and create session (flash function is disabled without a secret key)
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-
-bootstrap = Bootstrap(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDataBase.db'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -59,7 +47,7 @@ def allowed_file(filename):
 def generate_result(result, converted_text):
     if not converted_text:
         result = "There is something wrong with your input. Please check again!\n"
-    flash(result, 'info')
+    flash(result)
     return Convert(content=converted_text) 
 
 #secure file name and save to data folder
@@ -95,14 +83,14 @@ def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file found!', 'danger')
+            flash('No file found!')
             return redirect('/')
         
         file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
         if not file.filename:
-            flash('No selected file!', 'danger')
+            flash('No selected file!')
             return redirect('/')
 
         #if upload is valid
@@ -110,10 +98,9 @@ def upload_file():
             filename = handleFileSave(file)
 
             # prompt that upload is successful
-            return redirect('convert_result/'+str(createNewTask(filename, 1).id))
-        else:
-            flash('File extention name not valid!', 'danger')
-            return redirect('/')
+            return render_template("upload.html", 
+                task = createNewTask(filename, 1))
+    
     return redirect('/')
 
 @app.route('/submission', methods=['GET', "POST"])
@@ -123,13 +110,34 @@ def submit_text():
 
         #check for empty submission
         if not task_content:
-            flash('You cannot submit empty text!', 'warning')
+            flash('You cannot submit empty text!')
             return redirect('/')
 
         # prompt that submission is successful
-        return redirect('convert_result/'+str(createNewTask(task_content).id))
+        return render_template('submission.html', 
+            task = createNewTask(task_content))
     
     return redirect('/')    
+
+#saved for future re-designing this functionality
+'''
+@app.route('/delete/<int:id>')
+def delete(id):
+    task_to_delete = Convert.query.get_or_404(id)
+
+    try:
+        if task_to_delete.is_file != 0:
+            try:
+                os.remove(os.path.join(UPLOAD_FOLDER,task_to_delete.content))
+            except NameError as error: 
+                flash(str(error) + 'n' + "File cannot be removed") 
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return redirect('/')
+    except:
+        flash('There was a problem deleting that task!' + str(e))
+        return redirect('/')
+'''
 
 @app.route('/convert_result/<int:id>', methods=['GET', 'POST'])
 def to_convert(id):
@@ -154,7 +162,7 @@ def to_convert(id):
 
     #display error message
     if(process.returncode!=0 or not result): 
-        result = stderr + '\n' + "There is something wrong with your input. Please check again!"
+        result = stderr + '\n' + "There is something wrong with your input. Please check again!\n"
     #write result text into a file for future access
     else: 
         with io.open(output_file, "r+", encoding='utf-8') as temp_outputfile:
@@ -175,7 +183,7 @@ def return_files_tut():
     try:
         return send_file(output_file, attachment_filename="result.abc" ,as_attachment=True)
     except Exception as e:
-        flash(str(e), 'danger')
+        flash(str(e))
         return redirect('/')
 
 if __name__ == "__main__":
