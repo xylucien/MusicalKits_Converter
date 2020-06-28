@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Text Submission Result</title>
+{% endblock %}
+
+{% block body %}
+<h1 style="text-align: center;">Submission Successful!</h1>
+<a href="/" style="text-align: center;">Return</a>
+<a href="/convert_result/{{task.id}}">Convert</a>
+{% endblock %}
