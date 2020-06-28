@@ -1,0 +1,37 @@
+X:1
+T:Mandoline (Page 1)
+C:Claude Debussy
+Z:Paul Verlaine
+Z:Copyright © 2002 MakeMusic, Inc.
+%%score 1 { 2 | 3 }
+L:1/8
+Q:3/8=126
+M:6/8
+I:linebreak $
+K:C
+V:1 treble nm="Voice"
+V:2 treble nm="Piano"
+V:3 bass 
+V:1
+"^Allegretto vivace" !fermata!z6 | z6 | z6 |"^dolce  e  leggiero" A2 A d2 d |$ (f>e)f d2 A | %5
+w: |||Les don- neurs de|sé- * ré- na- des|
+ z!<(! (GG (B!<)!d)B!>(! | (G>F)E G2!>)! G) | z z (c e2 e) |$ .c.G.c !>!B2 B |!<(! _BBB c_Ac!<)! | %10
+w: Et les bel- * les|é- * cou- teu- ses|E- chan- gent|des pro- pos fa- des|Sous les ra- mu- res chan-|
+!p! d3"^dim." _d3 | c3 _c3 | %12
+w: teu- *||
+V:2
+[I:staff +1]{/G,}!>(![I:staff -1] !fermata!G6!>)! | x6 | x6 | x6 |$ x6 | %5
+ z !arpeggio![Gcg] z z !arpeggio![Bdb] z | z !arpeggio![Gcg] z z !arpeggio![GBg] z | %7
+ z [cec'] z z [d^ge'] z |$ z [cec'] z z [d^ge'] z | z!8va(! [d_bf'] z z [_ac'_a'] z | %10
+!p! z"_dim." (.[d'g'b'].[bd'g']) z (.[_b_d'_g'].[_gbd'])!8va)! | %11
+ z ([=g=c'=e'][egc']) z ([_e_g_c'][_ceg]) | %12
+V:3
+ !fermata!z6 | %1
+[K:treble] !arpeggio![G,DA]!pp![I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] | %2
+[I:staff +1] !arpeggio![G,DA][I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] | %3
+[I:staff +1] !arpeggio![G,DA][I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] |$ %4
+[I:staff +1] !arpeggio![G,DA][I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] | %5
+[I:staff +1][K:bass] !arpeggio![C,G,E]!<(!z[C,G,E] [^G,B,F]!<)!z[G,B,F]!>(! | %6
+ !arpeggio![C,=G,E]z[C,G,E] [G,B,D]z!>)![G,B,D] |[K:treble] [CEG]z[CEG] [B,D^G]z[B,DG] |$ %8
+ [CE=G]z[CEG] [B,D^G]z[B,DG] |!<(! [_B,DF]z[B,DF][K:bass] [_A,C_E]z[A,CE]!<)! | %10
+ ([G,=B,D]3 [_B,_D_G]3 |[K:treble] [C=E=G]3 [_E_G_c]3) | %12
