@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>File Upload Result</title>
+{% endblock %}
+
+{% block body %}
+<h1 style="text-align: center;">Upload Successful!</h1>
+<a href="/" style="text-align: center;">Return</a>
+<a href="/convert_result/{{task.id}}">Convert</a>
+{% endblock %}
