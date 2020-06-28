@@ -17,6 +17,11 @@ import io, os, sys, tempfile
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache')
 ALLOWED_EXTENSIONS = {'musicxml'}
+try:
+    os.makedirs('musicxmlCache')
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
 #initialize app and create session (flash function is disabled without a secret key)
 app = Flask(__name__)
@@ -37,6 +42,10 @@ class Convert(db.Model):
     is_file = db.Column(db.Integer, default=0)
     def __repr__(self):
         return '<Task %r>' % self.id
+
+class ButtonForm(FlaskForm):
+    Download = SubmitField()
+    Return = SubmitField()
 
 #only accepting limited file formats
 #format whitelist is in ALLOWED_EXTENSIONS
@@ -159,7 +168,7 @@ def to_convert(id):
 
     else:
         return render_template('convert_result.html', 
-            task=generate_result(result, converted_text))
+            task=generate_result(result, converted_text), button_form = ButtonForm())
 
 @app.route('/return-files/')
 def return_files_tut():
