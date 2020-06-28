@@ -1,3 +1,4 @@
+{% from 'bootstrap/utils.html' import render_messages %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,29 +11,22 @@
     {% block head %}
     {% endblock %}
 </head>
+<body style="    
+  background-image:url('https://images.unsplash.com/photo-1551503766-ac63dfa6401c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjExMzk2fQ&auto=format&fit=crop&w=1950&q=80')
+">
+    <main class="container">
+        {{ render_messages(container=False, dismissible=True) }}
+        {% block body %}
+        {% endblock %}
+    </main>
 
-<body>
-    <div class="container" style="min-height:100% width:80%">
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-warning alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                {{message}}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        
-        {% block body %}{% endblock %}
-        </div>
-	    <footer class="text-center">
-	        {% block footer %}
-	            <small> &copy; 2020 <a href="http://google.com" title="by Lucien">Lucien</a>
-	            </small>
-	        {% endblock %}
-	    </footer>    
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <footer class="text-center">
+        {% block footer %}
+            <small> &copy; 2020 <a href="http://google.com" title="by Lucien">Lucien</a>
+            </small>
+        {% endblock %}
+    </footer>
+
+    {{ bootstrap.load_js() }}
 </body>
 </html>
