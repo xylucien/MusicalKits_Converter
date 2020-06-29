@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
 {% block head %}
 <title>Result Page</title>
 {% endblock %}
@@ -8,11 +8,23 @@
 <div class="content">
     <h1 style="text-align: center">Result</h1>
 
-    <div class="form">
+    <div style="text-align : center;">
         <form action="/convert_result/{{task.id}}" method="POST">
-            <textarea name="content" id="content" rows="15" cols="160">{{task.content}}</textarea>
-            <a href="/">Return</a>
-            <a href="/return-files/">Download!</a>
+            <textarea name="content" id="content" rows="15" cols="120">{{task.content}}</textarea>
+        </form>
+        <br>
+    </div>
+
+    <div>
+        <form action='/'>
+            <input class="btn btn-primary btn-block" type="submit" value="Return">
+        </form>
+        <br>
+    </div>
+
+    <div>
+        <form action='/return-files'>
+            <input class="btn btn-success btn-block" type="submit" value="Download">
         </form>
     </div>
 </div>
