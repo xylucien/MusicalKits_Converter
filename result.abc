@@ -1,37 +1,35 @@
 X:1
-T:Mandoline (Page 1)
-C:Claude Debussy
-Z:Paul Verlaine
+T:Wie Melodien zieht es mir (Page 1)
+C:Johannes Brahms
+Z:Klaus Groth
 Z:Copyright © 2002 MakeMusic, Inc.
-%%score 1 { 2 | 3 }
+%%score 1 { ( 2 4 ) | 3 }
 L:1/8
-Q:3/8=126
-M:6/8
+Q:1/4=96
+M:2/2
 I:linebreak $
-K:C
+K:A
 V:1 treble nm="Voice"
-V:2 treble nm="Piano"
+V:2 bass nm="Piano"
+V:4 bass 
 V:3 bass 
 V:1
-"^Allegretto vivace" !fermata!z6 | z6 | z6 |"^dolce  e  leggiero" A2 A d2 d |$ (f>e)f d2 A | %5
-w: |||Les don- neurs de|sé- * ré- na- des|
- z!<(! (GG (B!<)!d)B!>(! | (G>F)E G2!>)! G) | z z (c e2 e) |$ .c.G.c !>!B2 B |!<(! _BBB c_Ac!<)! | %10
-w: Et les bel- * les|é- * cou- teu- ses|E- chan- gent|des pro- pos fa- des|Sous les ra- mu- res chan-|
-!p! d3"^dim." _d3 | c3 _c3 | %12
-w: teu- *||
+"^Zart" z2 C2 E2 A2 | (d2 c2) (B2 A2) | G4 F2 A2 | =F3 =G F3 G |$ E4 z2 c2 | B3 F G3 E | B4 A2 e2 | %7
+w: Wie Me- lo-|di- * en _|zieht es mir|lei- se durch den|Sinn, wie|Früh- lings- blu- men|blüht es und|
+ ^d3 c B3 ^^F |$ G4 z4 | z4 z2 ^B2 | ^d3 c A3 ^D | E4 z4 | z8 | %13
+w: schwebt wie Duft da-|hin,|und|schwebt wie Duft da-|hin.||
 V:2
-[I:staff +1]{/G,}!>(![I:staff -1] !fermata!G6!>)! | x6 | x6 | x6 |$ x6 | %5
- z !arpeggio![Gcg] z z !arpeggio![Bdb] z | z !arpeggio![Gcg] z z !arpeggio![GBg] z | %7
- z [cec'] z z [d^ge'] z |$ z [cec'] z z [d^ge'] z | z!8va(! [d_bf'] z z [_ac'_a'] z | %10
-!p! z"_dim." (.[d'g'b'].[bd'g']) z (.[_b_d'_g'].[_gbd'])!8va)! | %11
- z ([=g=c'=e'][egc']) z ([_e_g_c'][_ceg]) | %12
+!p! z"_sempre dolce" (E,EC A,E,[I:staff +1]C,A,,) |[I:staff -1] z (A,AE CA,[I:staff +1]E,C,) | x8 | %3
+ x8 |$ x4[I:staff -1][K:treble] z [CE] z [EA] | z F,- [F,F]2 z E,- [E,E]2 | z E,EC z2 ([ce]2 | %7
+ [B^d]3 [Ac] [GB]3 [^D^^F]) |$ [EG]2 ([eg]4 [^df]2- | [df]2 [ce]4 [G^B]2) | %10
+ ([=B^d]3 [Ac] [FA]3 [A,^D]) | x6!<(! z!<)! (G |!>(! fdB!>)!G[K:bass] FDB,G,) | %13
 V:3
- !fermata!z6 | %1
-[K:treble] !arpeggio![G,DA]!pp![I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] | %2
-[I:staff +1] !arpeggio![G,DA][I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] | %3
-[I:staff +1] !arpeggio![G,DA][I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] |$ %4
-[I:staff +1] !arpeggio![G,DA][I:staff -1]!arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1] !arpeggio![Gda][I:staff +1]!arpeggio![G,DA][I:staff -1]!arpeggio![Gda] | %5
-[I:staff +1][K:bass] !arpeggio![C,G,E]!<(!z[C,G,E] [^G,B,F]!<)!z[G,B,F]!>(! | %6
- !arpeggio![C,=G,E]z[C,G,E] [G,B,D]z!>)![G,B,D] |[K:treble] [CEG]z[CEG] [B,D^G]z[B,DG] |$ %8
- [CE=G]z[CEG] [B,D^G]z[B,DG] |!<(! [_B,DF]z[B,DF][K:bass] [_A,C_E]z[A,CE]!<)! | %10
- ([G,=B,D]3 [_B,_D_G]3 |[K:treble] [C=E=G]3 [_E_G_c]3) | %12
+ [A,,,A,,]4 z2 x2 | C,,4 z2 x2 | %2
+ (D,,A,,D,)[I:staff -1][F,A,][I:staff +1] (D,,D,F,)[I:staff -1][A,D] | %3
+[I:staff +1] (D,,_B,,D,)[I:staff -1][=F,_B,][I:staff +1] (D,,D,=F,)[I:staff -1][B,D] |$ %4
+[I:staff +1] (A,,,A,,E,)[I:staff -1][A,C][I:staff +1] A, z C, z | (D,,3 D, D,,3 D,) | %6
+ C,,4 A,E,C,A,, | (B,,,B,,^D,) z z (B,,A,) z |$ (E,,E,G,B, ^B, G,2 E,) | (E,,E,G,C =D G,2 E,) | %10
+ (A,,,A,,C,F,) z (B,,,B,,F,) | (E,,E,G,) z z2 x2 | E,2 z2 z4 | %13
+V:4
+ x8 | x8 | x8 | x8 |$ x4[K:treble] x4 | x8 | x8 | x8 |$ x8 | x8 | x8 | z E=dB GE[I:staff +1]DB, | %12
+ x4[I:staff -1][K:bass] x4 | %13

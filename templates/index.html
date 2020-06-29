@@ -5,44 +5,27 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
-    <h1 style="text-align: center">Lucien's Simple MusicXML to ABC Notation Converter</h1>
-    {% if tasks|length < 1 %}
-    <h4 style="text-align: center">Try it out!</h4>
-    {% else %}
-    <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
-        <tr>
-            <th>Task</th>
-            <th style="width: 20;">Timestamp</th>
-            <th>Actions</th>
-        </tr>
-        {% for task in tasks %}
-            <tr>
-                <td>
-                    <textarea rows="8" cols="60">{{ task.content }}</textarea>
-                </td>
-                
-                <td>
-                    {{ task.date_created.date() }}
-                </td>
-                
-                <td>
-                    <!----- unused for now
-                    <a href="/delete/{{task.id}}">Delete</a>
-                    <br>
-                    ----->
-                    <a href="/convert_result/{{task.id}}">Convert</a>
-                </td>
-            </tr>
-        {% endfor %}
+<div class="content" style="
+    text-align: center;
+">
+    <h1 style="text-align: center">MusicXML to ABC Notation Converter</h1>
 
 
-    </table>
-    {% endif %}
+    <ul style="list-style-type:none;display: inline-flex;text-align: center;padding: 20px 20px;outline-style: none;">
+        
+        <li id = "file-box"style="background:rgba(61,153,245,1);height: 300px;width: 240px;border-width: 10px;border-color: white;margin-inline-end: 40px;">
+            <h1 style="padding: 300px 0px 0px 0px;" id="file-button" class="uploadfile">Upload File</h1>
+        </li>   
+        
+        <li id="text-box"style="background:rgb(0, 248, 165);height: 300px;width: 240px;border-width: 10px;border-color: white;">
+        
+            <h1 style="padding: 300px 0px 0px 0px;" id="text-button" class="submittext">Submit Text</h1>
+        </li>  
 
-    <br>
+    </ul>
+    <br style="padding: 30px 0px 0px 0px;">
 
-    <div class="form" style="text-align: center;">
+    <div id = "text" class="form" style="text-align: center">
         <form action="/submission" method="POST" id="input">
             <textarea name="content" id="content" form="input" rows="8" cols="50"></textarea>
             <input type="submit" value="Submit">
@@ -51,12 +34,41 @@
     
     <br>
 
-    <div>
-        <form action="/upload" method="POST" enctype=multipart/form-data style="text-align: center;">
-            <input type=file name=file>
-            <input type=submit value=Upload>
+    <div id = "file">
+        <form action="/upload" method="POST" enctype="multipart/form-data" style="text-align: center;">
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
         </form>
     </div>
 
+</div>
+
+    <script>
+
+        $(document).ready(function() {
+            $('#text').slideUp(0);
+            $('#file').slideUp(0);
+        });
+       
+        $('#text-box').hover(
+            function(){$(this).css('box-shadow', '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)');}
+            ,function(){$(this).css('box-shadow', '0 0 0 0');
+        });
+        $('#file-box').hover(
+            function(){$(this).css('box-shadow', '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)');}
+            ,function(){$(this).css('box-shadow', '0 0 0 0');
+        });
+       
+        $('#text-button').click(function() {
+            $('#text').slideToggle(100);
+            $('#file').slideUp(100);
+          });
+          
+          $('#file-button').click(function() {
+            $('#file').slideToggle(100);
+            $('#text').slideUp(100);
+          });
+          
+    </script>
 </div>
 {% endblock %}
