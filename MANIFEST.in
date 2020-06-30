@@ -1,0 +1,5 @@
+include LICENSE
+graft converter/static
+graft converter/templates
+graft tests
+global-exclude *.pyc
