@@ -19,9 +19,8 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache')
 ALLOWED_EXTENSIONS = {'musicxml'}
 try:
     os.makedirs('musicxmlCache')
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
+except OSError:
+    pass
 
 #initialize app and create session (flash function is disabled without a secret key)
 app = Flask(__name__)
@@ -29,19 +28,14 @@ app.secret_key = os.urandom(24)
 
 bootstrap = Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDataBase.db'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-db = SQLAlchemy(app)
 output_file = 'result.abc'
 
-class Convert(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.TEXT, nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    is_file = db.Column(db.Integer, default=0)
-    def __repr__(self):
-        return '<Task %r>' % self.id
+class Convert:
+    def __init__(self, content, is_file = False):
+        self.is_file = is_file
+        self.content = content
 
 class ButtonForm(FlaskForm):
     Download = SubmitField()
@@ -53,7 +47,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-#helper function
+#helper functions
 
 #put result in a new Convert instance
 def generate_result(result, converted_text):
@@ -79,65 +73,57 @@ def handleTempInput(text_to_write):
 def handleTempOutput():
     pass
 
-#create a new Convert instance
-def createNewTask(content, is_file = 0):
-    new_task = Convert(content = content, is_file = is_file)
-    db.session.add(new_task)
-    db.session.commit()
-    return new_task    
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
     return render_template('index.html')
 
-@app.route('/upload', methods=['GET', 'POST'])
 def upload_file(): 
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file found!', 'danger')
-            return redirect('/')
-        
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if not file.filename:
-            flash('No selected file!', 'danger')
-            return redirect('/')
-
-        #if upload is valid
-        if file and allowed_file(file.filename):
-            filename = handleFileSave(file)
-
-            # prompt that upload is successful
-            return redirect('convert_result/'+str(createNewTask(filename, 1).id))
-        else:
-            flash('File extention name not valid!', 'danger')
-            return redirect('/')
-    return redirect('/')
-
-@app.route('/submission', methods=['GET', "POST"])
-def submit_text():
-    if request.method == 'POST':
-        task_content = request.form['content']
-
-        #check for empty submission
-        if not task_content:
-            flash('You cannot submit empty text!', 'warning')
-            return redirect('/')
-
-        # prompt that submission is successful
-        return redirect('convert_result/'+str(createNewTask(task_content).id))
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file found!', 'danger')
+        return "bruh"
     
-    return redirect('/')    
+    file = request.files['file']
+    # if user does not select file, browser also
+    # submit an empty part without filename
+    if not file.filename:
+        flash('No selected file!', 'danger')
+        return "bruh"
 
-@app.route('/convert_result/<int:id>', methods=['GET', 'POST'])
-def to_convert(id):
-    task = Convert.query.get_or_404(id)
+    #if upload is valid
+    if file and allowed_file(file.filename):
+        filename = handleFileSave(file)
+
+        # prompt that upload is successful
+        return Convert(file.filename, True)
+    else:
+        flash('File extention name not valid!', 'danger')
+        return "bruh"
+
+def submit_text():
+    task_content = request.form['content']
+
+    #check for empty submission
+    if not task_content:
+        flash('You cannot submit empty text!', 'warning')
+        return "bruh"
+
+    # prompt that submission is successful
+    return Convert(task_content, False)
+
+@app.route('/convert_result/<is_file>', methods=['GET', 'POST'])
+def to_convert(is_file):
+    if is_file == "submission":
+        task = submit_text()
+    else:
+        task = upload_file()
+    
+    #check if returns error message
+    if(task=="bruh"): return redirect('/')
     converted_text = ''
 
     #if user copy-pasted
-    if task.is_file == 0:
+    if not task.is_file:
         temp_inputfile = handleTempInput(task.content)
         target_path = temp_inputfile.name
     #if user uploaded a file
@@ -163,13 +149,10 @@ def to_convert(id):
     #temp file automatically deleted on close()
     if task.is_file == 0: temp_inputfile.close()
 
-    if request.method == 'POST':
-        return redirect('/')
+    return render_template('convert_result.html', 
+        task=generate_result(result, converted_text), button_form = ButtonForm())
 
-    else:
-        return render_template('convert_result.html', 
-            task=generate_result(result, converted_text), button_form = ButtonForm())
-
+#download result file
 @app.route('/return-files/')
 def return_files_tut():
     try:
