@@ -117,7 +117,7 @@ def to_convert(is_file):
     #listen for success message
     stdout, stderr = process.communicate()
     result = stdout
-    print(stderr)
+
     #display error message
     if(process.returncode!=0 or not result): 
         result = stderr + '\n' + "There is something wrong with your input. Please check again!"
