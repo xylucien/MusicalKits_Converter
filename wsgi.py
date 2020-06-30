@@ -1,5 +1,3 @@
 from converter import create_app
 
-if __name__ == "__main__":
-    application = create_app()
-    application.run()
+application = create_app()
