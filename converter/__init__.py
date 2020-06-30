@@ -24,7 +24,7 @@ def create_app(test_config=None):
         # a default secret that should be overridden by instance config
         SECRET_KEY="lucien",
         UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache'),
-        OUTPUT_FILE = 'result.abc',
+        OUTPUT_FILE = os.path.join(os.getcwd(),'result.abc'),
         ALLOWED_EXTENSIONS = {'musicxml'}
     )
 
