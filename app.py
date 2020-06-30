@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import Flask, render_template, url_for, request, redirect, flash, send_file, send_from_directory, Markup
 
 from flask_wtf import FlaskForm
+
 from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
     FormField, SelectField, FieldList
 from wtforms.validators import DataRequired, Length
@@ -9,7 +10,6 @@ from wtforms.fields import *
 
 from flask_bootstrap import Bootstrap
 
-from flask_sqlalchemy import SQLAlchemy
 from subprocess import Popen, PIPE
 from werkzeug.utils import secure_filename
 
@@ -40,14 +40,13 @@ class Convert:
 class ButtonForm(FlaskForm):
     Download = SubmitField()
     Return = SubmitField()
+#helper functions
 
 #only accepting limited file formats
 #format whitelist is in ALLOWED_EXTENSIONS
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-#helper functions
 
 #put result in a new Convert instance
 def generate_result(result, converted_text):
@@ -72,10 +71,6 @@ def handleTempInput(text_to_write):
 #thinking about how to implement
 def handleTempOutput():
     pass
-
-@app.route('/', methods=['POST', 'GET'])
-def index():
-    return render_template('index.html')
 
 def upload_file(): 
     # check if the post request has the file part
@@ -111,6 +106,10 @@ def submit_text():
     # prompt that submission is successful
     return Convert(task_content, False)
 
+@app.route('/', methods=['POST', 'GET'])
+def index():
+    return render_template('index.html')
+
 @app.route('/convert_result/<is_file>', methods=['GET', 'POST'])
 def to_convert(is_file):
     if is_file == "submission":
@@ -141,7 +140,7 @@ def to_convert(is_file):
     #display error message
     if(process.returncode!=0 or not result): 
         result = stderr + '\n' + "There is something wrong with your input. Please check again!"
-    #write result text into a file for future access
+    #read result from the file generated from script
     else: 
         with io.open(output_file, "r+", encoding='utf-8') as temp_outputfile:
             converted_text = temp_outputfile.read()
