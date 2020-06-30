@@ -1,7 +1,20 @@
 import errno, os
-
+from converter import convert, download
 from flask import Flask
 from flask_bootstrap import Bootstrap
+
+def setupAppAndCacheDirectories(app):
+    # ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+    try:
+        os.makedirs('musicxmlCache')
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
@@ -22,19 +35,8 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.update(test_config)
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-    try:
-        os.makedirs('musicxmlCache')
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
-
+    setupAppAndCacheDirectories(app)
     # apply the blueprints to the app
-    from converter import convert, download
 
     app.register_blueprint(convert.bp)
     app.register_blueprint(download.bp)
