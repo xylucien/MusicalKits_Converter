@@ -82,7 +82,7 @@ def submit_text():
 
     #check for empty submission
     if not task_content:
-        flash('You cannot submit empty text!', 'warning')
+        flash('You cannot submit empty text!', 'danger')
         return None
 
     # prompt that submission is successful
