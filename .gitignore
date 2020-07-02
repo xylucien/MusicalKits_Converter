@@ -4,6 +4,6 @@ __pycache__/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-
+*.pyc
 result.abc
 musicxmlCache/

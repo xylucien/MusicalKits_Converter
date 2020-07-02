@@ -2,6 +2,8 @@ import errno, os
 from converter import convert, download
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
+from wtforms import SubmitField
 
 def setupAppAndCacheDirectories(app):
     # ensure the instance folder exists
