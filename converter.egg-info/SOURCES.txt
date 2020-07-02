@@ -15,4 +15,9 @@ converter.egg-info/top_level.txt
 converter/templates/base.html
 converter/templates/convert_result.html
 converter/templates/index.html
+tests/conftest.py
+tests/sample.musicxml
 tests/test_386.py
+tests/test_homepage.py
+tests/test_submit.py
+tests/test_upload.py
