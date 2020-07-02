@@ -34,6 +34,7 @@ def allowed_file(filename):
 def generate_result(result, converted_text):
     if not converted_text:
         result = "There is something wrong with your input. Please check again!\n"
+        converted_text = "INVALID"
     flash(result, 'info')
     return Convert(content=converted_text) 
 

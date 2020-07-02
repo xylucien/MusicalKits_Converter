@@ -1,11 +1,11 @@
 Metadata-Version: 2.1
 Name: converter
 Version: 1.0.0
-Summary: TESTTTT
+Summary: Test Package
 Home-page: sbs.org
 Maintainer: Lucien
 Maintainer-email: xinyu.liu@sbs.org
 License: BSD
-Description: no sry
+Description: This is my personal project. It aims to provide a web service to convert between different music sheet format, which, in this case, MusicXML to ABCNotation.
 Platform: UNKNOWN
 Provides-Extra: test
