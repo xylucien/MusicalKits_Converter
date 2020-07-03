@@ -112,7 +112,7 @@ def to_convert(is_file):
     
     #execute the converter script and listen for result
 
-    process = Popen(['python3', 'converter/xml2abc.py', target_path], 
+    process = Popen(['converter/xml2abc.py', target_path], 
         stdout=PIPE, stderr = PIPE, encoding='utf-8')
     
     #listen for success message
