@@ -21,3 +21,4 @@ tests/test_386.py
 tests/test_homepage.py
 tests/test_submit.py
 tests/test_upload.py
+tests/test_z_download.py
