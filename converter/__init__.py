@@ -3,6 +3,7 @@ from converter import convert, download
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
+import stat
 from wtforms import SubmitField
 
 def setupAppAndCacheDirectories(app):
@@ -46,5 +47,7 @@ def create_app(test_config=None):
     app.add_url_rule("/", endpoint="index")
     
     bootstrap = Bootstrap(app)
+
+    os.chmod('converter/xml2abc.py', stat.S_IRWXU)
 
     return app
