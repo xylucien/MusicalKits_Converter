@@ -48,6 +48,4 @@ def create_app(test_config=None):
     
     bootstrap = Bootstrap(app)
 
-    os.chmod('converter/xml2abc.py', stat.S_IRWXU)
-
     return app
