@@ -131,6 +131,6 @@ def to_convert(is_file):
     
     #temp file automatically deleted on close()
     if task.is_file == 0: temp_inputfile.close()
-    #print(converted_text)
+    print(converted_text)
     return render_template('convert_result.html', 
         task=generate_result(result, converted_text), button_form = ButtonForm())
