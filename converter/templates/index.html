@@ -121,12 +121,12 @@
         <ul id = "upload_box" style="list-style-type:none;display: inline-flex;text-align: center;padding: 20px 20px;outline-style: none;">
             
             <li id = "file-box" style="cursor:pointer ;background:rgba(61,153,245,1);height: 300px;width: 240px;border-width: 10px;border-color: white;margin-inline-end: 40px;">
-                <h1 style="padding: 300px 0px 0px 0px;" id="file-button" class="uploadfile">Upload File</h1>
+                <h1 style="padding: 200px 0px 50px 0px;" id="file-button" class="uploadfile">Upload File</h1>
             </li>   
             
             <li id="text-box"style="cursor:pointer ;background:rgb(0, 248, 165);height: 300px;width: 240px;border-width: 10px;border-color: white;">
             
-                <h1 style="padding: 300px 0px 0px 0px;" id="text-button" class="submittext">Submit Text</h1>
+                <h1 style="padding: 200px 0px 50px 0px;" id="text-button" class="submittext">Submit Text</h1>
             </li>  
 
         </ul>
@@ -134,7 +134,7 @@
 
         <div id = "text" style="text-align: center">
             <form method="POST" id="text_input">
-                <textarea name="content" id = "textcontent" form="text_input" rows="8" cols="50"></textarea>
+                <textarea name="content" id = "textcontent" form="text_input" rows="8" cols="80"></textarea>
                 <button type ="submit" class="btn btn-primary btn-block" id = "text_submit">Submit</button>
             </form>
         </div>
@@ -192,13 +192,13 @@
     });
    
     $('#text-button').click(function() {
-        $('#text').slideToggle(100);
-        $('#file').slideUp(100);
+        $('#text').slideToggle(300);
+        $('#file').slideUp(300);
       });
       
       $('#file-button').click(function() {
-        $('#file').slideToggle(100);
-        $('#text').slideUp(100);
+        $('#file').slideToggle(300);
+        $('#text').slideUp(300);
       });
       
     </script>
