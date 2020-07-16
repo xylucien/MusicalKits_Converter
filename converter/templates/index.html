@@ -1,125 +1,111 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Lucien's Converter</title>
 <style>
 
-    html
+    .container
     {
+        width: 100%;
+        max-width: 680px; /* 800 */
+        text-align: center;
+        margin: 0 auto;
     }
-        body
+        .box
         {
-            font-family: Roboto, sans-serif;
-            color: #0f3c4b;
-            background-color: #e5edf1;
-            padding: 5rem 1.25rem; /* 80 20 */
+            font-size: 1.25rem; /* 20 */
+            background-color: #c8dadf;
+            position: relative;
+            padding: 100px 20px;
         }
-
-        .container
+        .box.has-advanced-upload
         {
-            width: 100%;
-            max-width: 680px; /* 800 */
-            text-align: center;
-            margin: 0 auto;
+            outline: 2px dashed #92b0b3;
+            outline-offset: -10px;
+
+            -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+            transition: outline-offset .15s ease-in-out, background-color .15s linear;
         }
-
-            .box
+        .box.is-dragover
+        {
+            outline-offset: -20px;
+            outline-color: #c8dadf;
+            background-color: #fff;
+        }
+            .box__dragndrop,
+            .box__icon
             {
-                font-size: 1.25rem; /* 20 */
-                background-color: #c8dadf;
-                position: relative;
-                padding: 100px 20px;
+                display: none;
             }
-            .box.has-advanced-upload
+            .box.has-advanced-upload .box__dragndrop
             {
-                outline: 2px dashed #92b0b3;
-                outline-offset: -10px;
-
-                -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-                transition: outline-offset .15s ease-in-out, background-color .15s linear;
+                display: inline;
             }
-            .box.is-dragover
+            .box.has-advanced-upload .box__icon
             {
-                outline-offset: -20px;
-                outline-color: #c8dadf;
-                background-color: #fff;
+                width: 100%;
+                height: 80px;
+                fill: #92b0b3;
+                display: block;
+                margin-bottom: 40px;
             }
-                .box__dragndrop,
-                .box__icon
-                {
-                    display: none;
-                }
-                .box.has-advanced-upload .box__dragndrop
-                {
-                    display: inline;
-                }
-                .box.has-advanced-upload .box__icon
-                {
-                    width: 100%;
-                    height: 80px;
-                    fill: #92b0b3;
-                    display: block;
-                    margin-bottom: 40px;
-                }
 
-                .js .box__file
-                {
-                    width: 0.1px;
-                    height: 0.1px;
-                    opacity: 0;
-                    overflow: hidden;
-                    position: absolute;
-                    z-index: -1;
-                }
-                .js .box__file + label
-                {
-                    max-width: 80%;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    cursor: pointer;
-                    display: inline-block;
-                    overflow: hidden;
-                }
-                .js .box__file + label:hover strong,
-                .box__file:focus + label strong,
-                .box__file.has-focus + label strong
-                {
-                    color: #39bfd3;
-                }
-                .js .box__file:focus + label,
-                .js .box__file.has-focus + label
-                {
-                    outline: 1px dotted #000;
-                    outline: -webkit-focus-ring-color auto 5px;
-                }
-                    .js .box__file + label *
-                    {
-                        /* pointer-events: none; */ /* in case of FastClick lib use */
-                    }
+            .js .box__file
+            {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+            .js .box__file + label
+            {
+                max-width: 80%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                cursor: pointer;
+                display: inline-block;
+                overflow: hidden;
+            }
+            .js .box__file + label:hover strong,
+            .box__file:focus + label strong,
+            .box__file.has-focus + label strong
+            {
+                color: #39bfd3;
+            }
+            .js .box__file:focus + label,
+            .js .box__file.has-focus + label
+            {
+                outline: 1px dotted #000;
+                outline: -webkit-focus-ring-color auto 5px;
+            }
 
-                .no-js .box__file + label
-                {
-                    display: none;
-                }
+            .no-js .box__file + label
+            {
+                display: none;
+            }
 
-                .no-js .box__button
+            .no-js .box__button
+            {
+                display: block;
+            }
+            .box__button
+            {
+                font-weight: 700;
+                color: #e5edf1;
+                display: block;
+                padding: 8px 16px;
+                margin: 40px auto 0;
+            }
+                .box__button:hover,
+                .box__button:focus
                 {
-                    display: block;
+                    background-color: #0f3c4b;
                 }
-                .box__button
-                {
-                    font-weight: 700;
-                    color: #e5edf1;
-                    background-color: #39bfd3;
-                    display: block;
-                    padding: 8px 16px;
-                    margin: 40px auto 0;
-                }
-                    .box__button:hover,
-                    .box__button:focus
-                    {
-                        background-color: #0f3c4b;
-                    }
+    #result_content {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
 </style>
 <script type="text/javascript">
@@ -129,52 +115,63 @@
 {% endblock %}
 
 {% block body %}
-<div style="
-    text-align: center;
-" class="container" role="main">
-    <h1 style="text-align: center">MusicXML to ABC Notation Converter</h1>
+<div style="text-align: center;" class="container">
+    <h1 style="text-align: center" id = "the_title">MusicXML to ABC Notation Converter</h1>
+    <div id = "main_page">
+        <ul id = "upload_box" style="list-style-type:none;display: inline-flex;text-align: center;padding: 20px 20px;outline-style: none;">
+            
+            <li id = "file-box" style="cursor:pointer ;background:rgba(61,153,245,1);height: 300px;width: 240px;border-width: 10px;border-color: white;margin-inline-end: 40px;">
+                <h1 style="padding: 300px 0px 0px 0px;" id="file-button" class="uploadfile">Upload File</h1>
+            </li>   
+            
+            <li id="text-box"style="cursor:pointer ;background:rgb(0, 248, 165);height: 300px;width: 240px;border-width: 10px;border-color: white;">
+            
+                <h1 style="padding: 300px 0px 0px 0px;" id="text-button" class="submittext">Submit Text</h1>
+            </li>  
 
+        </ul>
+        <br style="padding: 30px 0px 0px 0px;">
 
-    <ul style="list-style-type:none;display: inline-flex;text-align: center;padding: 20px 20px;outline-style: none;">
+        <div id = "text" style="text-align: center">
+            <form method="POST" id="text_input">
+                <textarea name="content" id = "textcontent" form="text_input" rows="8" cols="50"></textarea>
+                <button type ="submit" class="btn btn-primary btn-block" id = "text_submit">Submit</button>
+            </form>
+        </div>
         
-        <li id = "file-box"style="background:rgba(61,153,245,1);height: 300px;width: 240px;border-width: 10px;border-color: white;margin-inline-end: 40px;">
-            <h1 style="padding: 300px 0px 0px 0px;" id="file-button" class="uploadfile">Upload File</h1>
-        </li>   
-        
-        <li id="text-box"style="background:rgb(0, 248, 165);height: 300px;width: 240px;border-width: 10px;border-color: white;">
-        
-            <h1 style="padding: 300px 0px 0px 0px;" id="text-button" class="submittext">Submit Text</h1>
-        </li>  
+        <br>
 
-    </ul>
-    <br style="padding: 30px 0px 0px 0px;">
-
-    <div id = "text" style="text-align: center">
-        <form action="/convert_result/submission" method="POST" id="input">
-            <textarea name="content" form="input" rows="8" cols="50"></textarea>
-            <input type="submit" value="Submit">
-        </form>
+        <div id = "file">
+            <form method="POST" enctype="multipart/form-data" class="box">
+                <div class="box__input">
+                    <svg class="box__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43"><path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z"></path></svg>
+                    <input type="file" name="files" id = "filel" class="box__file">
+                    <label for="filel"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+                    <button type="submit" class="btn btn-success btn-block box__button">Upload</button>
+                </div>
+            </form>
+        </div>
     </div>
+    <div id = "result_page">    
+        <div style="text-align : center;">
+            <textarea name="content" id="result_content" rows="15" cols="80"></textarea>
+            <br>
+        </div>
     
-    <br>
-
+        <div>
+            <form action='/'>
+                <input class="btn btn-primary btn-block" type="submit" value="Return">
+            </form>
+            <br>
+        </div>
     
-        <!---form action="/convert_result/upload" method="POST" enctype="multipart/form-data" style="text-align: center;">
-            <input type="file" name="file">
-            <input type="submit" value="Upload">
-        </form--->
-    
-
-    <div id = "file">
-        <form method="POST" enctype="multipart/form-data" class="box">
-            <div class="box__input">
-                <svg class="box__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43"><path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z"></path></svg>
-                <input type="file" name="files" id = "filel" class="box__file">
-                <label for="filel"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-                <button type="submit" class="box__button">Upload</button>
-            </div>
-        </form>
+        <div>
+            <form action='/return-files'>
+                <input class="btn btn-success btn-block" type="submit" value="Download" id = "download">
+            </form>
+        </div>
     </div>
+
 </div>
 
     <script>
@@ -182,6 +179,7 @@
     $(document).ready(function() {
         $('#text').slideUp(0);
         $('#file').slideUp(0);
+        $('#result_page').slideUp(0);
     });
    
     $('#text-box').hover(
@@ -204,98 +202,126 @@
       });
       
     </script>
+    
     <script type="text/javascript"> 
         'use strict';
-    
-        ;( function ( document, window, index )
-        {
-            // feature detection for drag&drop upload
-            var isAdvancedUpload = function()
-                {
-                    var div = document.createElement( 'div' );
-                    return ( ( 'draggable' in div ) || ( 'ondragstart' in div && 'ondrop' in div ) ) && 'FormData' in window && 'FileReader' in window;
-                }();
-    
-            // applying the effect for every form
-            var forms = document.querySelectorAll( '.box' );
-            var upload_file = false;
-            Array.prototype.forEach.call( forms, function( form )
+        
+        // feature detection for drag&drop upload
+        var isAdvancedUpload = function()
             {
-                var input		 = form.querySelector( 'input[type="file"]' ),
-                    label		 = form.querySelector( 'label' ),
-                    showFiles	 = function( files )
-                    {
-                        label.textContent = files[ 0 ].name;
+                var div = document.createElement( 'div' );
+                return ( ( 'draggable' in div ) || ( 'ondragstart' in div && 'ondrop' in div ) ) && 'FormData' in window && 'FileReader' in window;
+            }();
+
+        // applying the effect for every form
+        var forms = document.querySelectorAll( '.box' );
+        var text_form = document.getElementById('text_input');
+
+        function logSubmit(e) {
+            var form_data = new FormData();
+                form_data.append('text', document.getElementById("textcontent").value);
+                $.ajax({
+                    type: 'POST',
+                    url: '/convert_result/submission',
+                    data: form_data,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        var result_text = JSON.parse(data).result;
+                        document.title = "Result Page";
+                        document.getElementById('the_title').innerHTML = "Result";
+                        document.getElementById('result_content').innerHTML = result_text;
+                        if(result_text==="There is something wrong with your input. Please check again!"){
+                            document.getElementById('download').style.display = "none";
+                        }                        
+                        $('#main_page').slideUp(500);
+                        $('#result_page').slideDown(1500);
+                    },
+                    error: function(data){
+                        window.location.href = '/';
                     }
-    
-                // automatically submit the form on file select
-                input.addEventListener( 'change', function( e )
-                {   
-                    upload_file = e.target.files
-                    showFiles( upload_file );
                 });
-    
-                // drag&drop files if the feature is available
-                if( isAdvancedUpload )
+                e.preventDefault();
+        }
+        text_form.addEventListener('submit', logSubmit);
+        var upload_file = false;
+        Array.prototype.forEach.call( forms, function( form )
+        {
+            var input		 = form.querySelector( 'input[type="file"]' ),
+                label		 = form.querySelector( 'label' ),
+                showFiles	 = function( files )
                 {
-                    form.classList.add( 'has-advanced-upload' ); // letting the CSS part to know drag&drop is supported by the browser
-    
-                    [ 'drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop' ].forEach( function( event )
-                    {
-                        form.addEventListener( event, function( e )
-                        {
-                            // preventing the unwanted behaviours
-                            e.preventDefault();
-                            e.stopPropagation();
-                        });
-                    });
-                    [ 'dragover', 'dragenter' ].forEach( function( event )
-                    {
-                        form.addEventListener( event, function()
-                        {
-                            form.classList.add( 'is-dragover' );
-                        });
-                    });
-                    [ 'dragleave', 'dragend', 'drop' ].forEach( function( event )
-                    {
-                        form.addEventListener( event, function()
-                        {
-                            form.classList.remove( 'is-dragover' );
-                        });
-                    });
-                    form.addEventListener( 'drop', function( e )
-                    {
-                        upload_file = e.dataTransfer.files; // the files that were dropped
-                        showFiles( upload_file );                    
-                    });
+                    label.textContent = files[ 0 ].name;
                 }
 
-                // if the form was submitted
-                form.addEventListener( 'submit', function( e )
+            // automatically submit the form on file select
+            input.addEventListener( 'change', function( e )
+            {   
+                upload_file = e.target.files
+                showFiles( upload_file );
+            });
+
+            // drag&drop files if the feature is available
+            if( isAdvancedUpload )
+            {
+                form.classList.add( 'has-advanced-upload' ); // letting the CSS part to know drag&drop is supported by the browser
+
+                [ 'drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop' ].forEach( function( event )
                 {
-                    //alert(upload_file[0].name)
-                    //console.log('123!');
-                    var form_data = new FormData();
-                    form_data.append('file', upload_file[0]);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/convert_result/upload',
-                        data: form_data,
-                        contentType: false,
-                        processData: false,
-                        success: function(data) {
-                            alert('Success!');
-                            form.classList.remove( 'is-uploading' );
-                            window.location.href = '/convert_result/upload';
-                        },
-                        error: function(data){
-                            alert('fail smh!');
-                            window.location.href = '/convert_result/upload';
-                        }
+                    form.addEventListener( event, function( e )
+                    {
+                        // preventing the unwanted behaviours
+                        e.preventDefault();
+                        e.stopPropagation();
                     });
                 });
+                [ 'dragover', 'dragenter' ].forEach( function( event )
+                {
+                    form.addEventListener( event, function()
+                    {
+                        form.classList.add( 'is-dragover' );
+                    });
+                });
+                [ 'dragleave', 'dragend', 'drop' ].forEach( function( event )
+                {
+                    form.addEventListener( event, function()
+                    {
+                        form.classList.remove( 'is-dragover' );
+                    });
+                });
+                form.addEventListener( 'drop', function( e )
+                {
+                    upload_file = e.dataTransfer.files; // the files that were dropped
+                    showFiles( upload_file );                    
+                });
+            }
+
+            // if the form was submitted
+            form.addEventListener( 'submit', function( e )
+            {
+                var form_data = new FormData();
+                form_data.append('file', upload_file[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/convert_result/upload',
+                    data: form_data,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        form.classList.remove( 'is-uploading' );
+                        document.title = "Result Page";
+                        $('#main_page').slideUp(500);
+                        $('#result_page').slideDown(1500);
+                        document.getElementById('the_title').innerHTML = "Result";
+                        document.getElementById('result_content').innerHTML = JSON.parse(data).result;
+                    },
+                    error: function(data){
+                        window.location.href = '/';
+                    }
+                });
+                e.preventDefault();
             });
-        }( document, window, 0 ));
+        });
     </script>
 </div>
 {% endblock %}
