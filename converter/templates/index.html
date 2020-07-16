@@ -1,140 +1,34 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<style>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
 
-    .container
-    {
-        width: 100%;
-        max-width: 680px; /* 800 */
-        text-align: center;
-        margin: 0 auto;
-    }
-        .box
-        {
-            font-size: 1.25rem; /* 20 */
-            background-color: #c8dadf;
-            position: relative;
-            padding: 100px 20px;
-        }
-        .box.has-advanced-upload
-        {
-            outline: 2px dashed #92b0b3;
-            outline-offset: -10px;
-
-            -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-            transition: outline-offset .15s ease-in-out, background-color .15s linear;
-        }
-        .box.is-dragover
-        {
-            outline-offset: -20px;
-            outline-color: #c8dadf;
-            background-color: #fff;
-        }
-            .box__dragndrop,
-            .box__icon
-            {
-                display: none;
-            }
-            .box.has-advanced-upload .box__dragndrop
-            {
-                display: inline;
-            }
-            .box.has-advanced-upload .box__icon
-            {
-                width: 100%;
-                height: 80px;
-                fill: #92b0b3;
-                display: block;
-                margin-bottom: 40px;
-            }
-
-            .js .box__file
-            {
-                width: 0.1px;
-                height: 0.1px;
-                opacity: 0;
-                overflow: hidden;
-                position: absolute;
-                z-index: -1;
-            }
-            .js .box__file + label
-            {
-                max-width: 80%;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                cursor: pointer;
-                display: inline-block;
-                overflow: hidden;
-            }
-            .js .box__file + label:hover strong,
-            .box__file:focus + label strong,
-            .box__file.has-focus + label strong
-            {
-                color: #39bfd3;
-            }
-            .js .box__file:focus + label,
-            .js .box__file.has-focus + label
-            {
-                outline: 1px dotted #000;
-                outline: -webkit-focus-ring-color auto 5px;
-            }
-
-            .no-js .box__file + label
-            {
-                display: none;
-            }
-
-            .no-js .box__button
-            {
-                display: block;
-            }
-            .box__button
-            {
-                font-weight: 700;
-                color: #e5edf1;
-                display: block;
-                padding: 8px 16px;
-                margin: 40px auto 0;
-            }
-                .box__button:hover,
-                .box__button:focus
-                {
-                    background-color: #0f3c4b;
-                }
-    #result_content {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-</style>
 <script type="text/javascript">
     (function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);
 </script>
-
 {% endblock %}
 
-{% block body %}
-<div style="text-align: center;" class="container">
-    <h1 style="text-align: center" id = "the_title">MusicXML to ABC Notation Converter</h1>
-    <div id = "main_page">
-        <ul id = "upload_box" style="list-style-type:none;display: inline-flex;text-align: center;padding: 20px 20px;outline-style: none;">
-            
-            <li id = "file-box" style="cursor:pointer ;background:rgba(61,153,245,1);height: 300px;width: 240px;border-width: 10px;border-color: white;margin-inline-end: 40px;">
-                <h1 style="padding: 200px 0px 50px 0px;" id="file-button" class="uploadfile">Upload File</h1>
-            </li>   
-            
-            <li id="text-box"style="cursor:pointer ;background:rgb(0, 248, 165);height: 300px;width: 240px;border-width: 10px;border-color: white;">
-            
-                <h1 style="padding: 200px 0px 50px 0px;" id="text-button" class="submittext">Submit Text</h1>
-            </li>  
 
+{% block body %}
+<div class="container">
+    <h1 id = "the_title">MusicXML to ABC Notation Converter</h1>
+    
+    <div id = "main_page">
+        <ul id = "upload_box">
+            <li id = "file-box" >
+                <h1 id="file-button" class="uploadfile">Upload File</h1>
+            </li>   
+
+            <li id="text-box">
+                <h1 id="text-button" class="submittext">Submit Text</h1>
+            </li>  
         </ul>
+
         <br style="padding: 30px 0px 0px 0px;">
 
-        <div id = "text" style="text-align: center">
+        <div id = "text">
             <form method="POST" id="text_input">
-                <textarea name="content" id = "textcontent" form="text_input" rows="8" cols="80"></textarea>
+                <textarea name="content" id = "textcontent" form="text_input" rows="15" cols="80"></textarea>
                 <button type ="submit" class="btn btn-primary btn-block" id = "text_submit">Submit</button>
             </form>
         </div>
@@ -152,12 +46,10 @@
             </form>
         </div>
     </div>
-    <div id = "result_page">    
-        <div style="text-align : center;">
-            <textarea name="content" id="result_content" rows="15" cols="80"></textarea>
-            <br>
-        </div>
     
+    <div id = "result_page">    
+        <textarea name="content" id="result_content" rows="15" cols="80"></textarea>
+        <br>
         <div>
             <form action='/'>
                 <input class="btn btn-primary btn-block" type="submit" value="Return">
@@ -173,155 +65,6 @@
     </div>
 
 </div>
-
-    <script>
-
-    $(document).ready(function() {
-        $('#text').slideUp(0);
-        $('#file').slideUp(0);
-        $('#result_page').slideUp(0);
-    });
-   
-    $('#text-box').hover(
-        function(){$(this).css('box-shadow', '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)');}
-        ,function(){$(this).css('box-shadow', '0 0 0 0');
-    });
-    $('#file-box').hover(
-        function(){$(this).css('box-shadow', '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)');}
-        ,function(){$(this).css('box-shadow', '0 0 0 0');
-    });
-   
-    $('#text-button').click(function() {
-        $('#text').slideToggle(300);
-        $('#file').slideUp(300);
-      });
-      
-      $('#file-button').click(function() {
-        $('#file').slideToggle(300);
-        $('#text').slideUp(300);
-      });
-      
-    </script>
     
-    <script type="text/javascript"> 
-        'use strict';
-        
-        // feature detection for drag&drop upload
-        var isAdvancedUpload = function()
-            {
-                var div = document.createElement( 'div' );
-                return ( ( 'draggable' in div ) || ( 'ondragstart' in div && 'ondrop' in div ) ) && 'FormData' in window && 'FileReader' in window;
-            }();
-
-        // applying the effect for every form
-        var forms = document.querySelectorAll( '.box' );
-        var text_form = document.getElementById('text_input');
-
-        function logSubmit(e) {
-            var form_data = new FormData();
-                form_data.append('text', document.getElementById("textcontent").value);
-                $.ajax({
-                    type: 'POST',
-                    url: '/convert_result/submission',
-                    data: form_data,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        var result_text = JSON.parse(data).result;
-                        document.title = "Result Page";
-                        document.getElementById('the_title').innerHTML = "Result";
-                        document.getElementById('result_content').innerHTML = result_text;
-                        if(result_text==="There is something wrong with your input. Please check again!"){
-                            document.getElementById('download').style.display = "none";
-                        }                        
-                        $('#main_page').slideUp(500);
-                        $('#result_page').slideDown(1500);
-                    },
-                    error: function(data){
-                        window.location.href = '/';
-                    }
-                });
-                e.preventDefault();
-        }
-        text_form.addEventListener('submit', logSubmit);
-        var upload_file = false;
-        Array.prototype.forEach.call( forms, function( form )
-        {
-            var input		 = form.querySelector( 'input[type="file"]' ),
-                label		 = form.querySelector( 'label' ),
-                showFiles	 = function( files )
-                {
-                    label.textContent = files[ 0 ].name;
-                }
-
-            // automatically submit the form on file select
-            input.addEventListener( 'change', function( e )
-            {   
-                upload_file = e.target.files
-                showFiles( upload_file );
-            });
-
-            // drag&drop files if the feature is available
-            if( isAdvancedUpload )
-            {
-                form.classList.add( 'has-advanced-upload' ); // letting the CSS part to know drag&drop is supported by the browser
-
-                [ 'drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop' ].forEach( function( event )
-                {
-                    form.addEventListener( event, function( e )
-                    {
-                        // preventing the unwanted behaviours
-                        e.preventDefault();
-                        e.stopPropagation();
-                    });
-                });
-                [ 'dragover', 'dragenter' ].forEach( function( event )
-                {
-                    form.addEventListener( event, function()
-                    {
-                        form.classList.add( 'is-dragover' );
-                    });
-                });
-                [ 'dragleave', 'dragend', 'drop' ].forEach( function( event )
-                {
-                    form.addEventListener( event, function()
-                    {
-                        form.classList.remove( 'is-dragover' );
-                    });
-                });
-                form.addEventListener( 'drop', function( e )
-                {
-                    upload_file = e.dataTransfer.files; // the files that were dropped
-                    showFiles( upload_file );                    
-                });
-            }
-
-            // if the form was submitted
-            form.addEventListener( 'submit', function( e )
-            {
-                var form_data = new FormData();
-                form_data.append('file', upload_file[0]);
-                $.ajax({
-                    type: 'POST',
-                    url: '/convert_result/upload',
-                    data: form_data,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        form.classList.remove( 'is-uploading' );
-                        document.title = "Result Page";
-                        $('#main_page').slideUp(500);
-                        $('#result_page').slideDown(1500);
-                        document.getElementById('the_title').innerHTML = "Result";
-                        document.getElementById('result_content').innerHTML = JSON.parse(data).result;
-                    },
-                    error: function(data){
-                        window.location.href = '/';
-                    }
-                });
-                e.preventDefault();
-            });
-        });
-    </script>
-</div>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}
