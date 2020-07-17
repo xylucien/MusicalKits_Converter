@@ -10,7 +10,7 @@ def test_upload_IncorrectMusicXml(test_client):
         '/convert_result/upload', data=data, follow_redirects=True,
         content_type='multipart/form-data'
     )
-    assert b"INVALID" in response.data
+    assert b"wrong" in response.data
 
 def test_upload_CorrectMusicXml(test_client):
     #Test can upload and convert valid musicxml

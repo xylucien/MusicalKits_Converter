@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Blueprint, current_app, flash, render_template, redirect, request, url_for
+from flask import Blueprint, current_app, flash, json, Response, render_template, redirect, request, url_for
 from flask_wtf import FlaskForm
 from subprocess import Popen, PIPE
 from werkzeug.utils import secure_filename
@@ -60,7 +60,6 @@ def upload_file():
     if 'file' not in request.files:
         flash('No file found!', 'danger')
         return None
-    
     file = request.files['file']
     # if user does not select file, browser also
     # submit an empty part without filename
@@ -71,21 +70,19 @@ def upload_file():
     #if upload is valid
     if file and allowed_file(file.filename):
         filename = handleFileSave(file)
-
         # prompt that upload is successful
         return Convert(filename, True)
     else:
         flash('File extention name not valid!', 'danger')
         return None
+    return None
 
 def submit_text():
-    task_content = request.form['content']
-
+    task_content = request.form['text']
     #check for empty submission
     if not task_content:
         flash('You cannot submit empty text!', 'danger')
         return None
-
     # prompt that submission is successful
     return Convert(task_content, False)
 
@@ -97,9 +94,8 @@ def to_convert(is_file):
         task = upload_file()
     
     #check if returns error message
-    if(task is None): 
-        return redirect('/')
-    
+    if(task is None):
+        return None
     converted_text = ''
 
     #if user copy-pasted
@@ -129,6 +125,6 @@ def to_convert(is_file):
     
     #temp file automatically deleted on close()
     if task.is_file == 0: temp_inputfile.close()
-
-    return render_template('convert_result.html', 
-        task=generate_result(result, converted_text), button_form = ButtonForm())
+    if not converted_text:
+        converted_text = "There is something wrong with your input. Please check again!"
+    return json.dumps({'result':converted_text})

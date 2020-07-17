@@ -6,7 +6,7 @@ bp = Blueprint("return_files", __name__)
 def download_result():
     try:
         return send_file(current_app.config['OUTPUT_FILE'], 
-            attachment_filename="result.abc" ,as_attachment=True)
+            attachment_filename="result.abc" ,as_attachment=True, cache_timeout=0)
     except Exception as e:
         flash(str(e), 'danger')
         return redirect('/')
