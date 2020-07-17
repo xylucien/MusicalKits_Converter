@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" type="text/css" href="/static/css/index.css">
 
 <script type="text/javascript">
     (function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);
@@ -66,5 +66,5 @@
 
 </div>
     
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="/static/js/index.js"></script>
 {% endblock %}
