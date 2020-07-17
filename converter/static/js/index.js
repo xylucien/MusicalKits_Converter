@@ -21,15 +21,19 @@ function logSubmit(e) {
             contentType: false,
             processData: false,
             success: function(data) {
-                var result_text = JSON.parse(data).result;
-                document.title = "Result Page";
-                document.getElementById('the_title').innerHTML = "Result";
-                document.getElementById('result_content').innerHTML = result_text;
-                if(result_text==="There is something wrong with your input. Please check again!"){
-                    document.getElementById('download').style.display = "none";
-                }                        
-                $('#main_page').slideUp(500);
-                $('#result_page').slideDown(1500);
+                var result_data = JSON.parse(data);
+                console.log(result_data);
+                if(result_data.is_success){
+                    var result_text = result_data.result;
+                    document.title = "Result Page";
+                    document.getElementById('the_title').innerHTML = "Result";
+                    document.getElementById('result_content').innerHTML = result_text;
+                    if(result_text==="There is something wrong with your input. Please check again!"){
+                        document.getElementById('download').style.display = "none";
+                    }                        
+                    $('#main_page').slideUp(500);
+                    $('#result_page').slideDown(1500);                    
+                }
             },
             error: function(data){
                 window.location.href = '/';
