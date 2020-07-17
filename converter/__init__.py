@@ -2,9 +2,7 @@ import errno, os
 from converter import convert, download
 from flask import Flask
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
 import stat
-from wtforms import SubmitField
 
 def setupAppAndCacheDirectories(app):
     # ensure the instance folder exists
@@ -21,7 +19,7 @@ def setupAppAndCacheDirectories(app):
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
-    app = Flask(__name__, instance_relative_config=True, static_folder='/converter/static/')
+    app = Flask(__name__, instance_relative_config=True, static_folder='')
     
     app.config.from_mapping(
         # a default secret that should be overridden by instance config

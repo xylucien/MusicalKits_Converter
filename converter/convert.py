@@ -1,9 +1,7 @@
 from flask import Flask
 from flask import Blueprint, current_app, flash, json, Response, render_template, redirect, request, url_for
-from flask_wtf import FlaskForm
 from subprocess import Popen, PIPE
 from werkzeug.utils import secure_filename
-from wtforms import SubmitField
 
 import io, os, sys, tempfile
 
@@ -19,9 +17,6 @@ class Convert:
         self.is_file = is_file
         self.content = content
 
-class ButtonForm(FlaskForm):
-    Download = SubmitField()
-    Return = SubmitField()
 #helper functions
 
 #only accepting limited file formats
