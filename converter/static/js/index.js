@@ -22,20 +22,21 @@ function logSubmit(e) {
             processData: false,
             success: function(data) {
                 var result_data = JSON.parse(data);
-                console.log(result_data);
                 if(result_data.is_success){
                     var result_text = result_data.result;
                     document.title = "Result Page";
                     document.getElementById('the_title').innerHTML = "Result";
                     document.getElementById('result_content').innerHTML = result_text;
-                    if(result_text==="There is something wrong with your input. Please check again!"){
-                        document.getElementById('download').style.display = "none";
-                    }                        
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
                 }
+                document.getElementById('alert_message').innerHTML = result_data.message;
+                document.getElementById('alert').style.display = 'block';
+                $('#text').slideUp(500);
             },
             error: function(data){
+                document.getElementById('alert_message').innerHTML = "An unknown error occurred";
+                document.getElementById('alert').style.display = 'block';
                 window.location.href = '/';
             }
         });
@@ -106,14 +107,22 @@ Array.prototype.forEach.call( forms, function( form )
             contentType: false,
             processData: false,
             success: function(data) {
-                form.classList.remove( 'is-uploading' );
-                document.title = "Result Page";
-                $('#main_page').slideUp(500);
-                $('#result_page').slideDown(1500);
-                document.getElementById('the_title').innerHTML = "Result";
-                document.getElementById('result_content').innerHTML = JSON.parse(data).result;
+                var result_data = JSON.parse(data);
+                if(result_data.is_success){
+                    var result_text = result_data.result;
+                    document.title = "Result Page";
+                    document.getElementById('the_title').innerHTML = "Result";
+                    document.getElementById('result_content').innerHTML = result_text;
+                    $('#main_page').slideUp(500);
+                    $('#result_page').slideDown(1500);                    
+                }
+                document.getElementById('alert_message').innerHTML = result_data.message;
+                document.getElementById('alert').style.display = 'block';
+                $('#file').slideUp(500);
             },
             error: function(data){
+                document.getElementById('alert_message').innerHTML = "An unknown error occurred";
+                document.getElementById('alert').style.display = 'block';
                 window.location.href = '/';
             }
         });

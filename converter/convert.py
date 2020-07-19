@@ -110,7 +110,7 @@ def to_convert(is_file):
 
     #load error message
     if(process.returncode!=0 or not result): 
-        result = stderr + '\n' + "There is something wrong with your input. Please check again!"
+        result = "There is something wrong with your input. Please check again!"
     #read result from the file generated from script
     else: 
         with io.open(current_app.config['OUTPUT_FILE'], "r+", encoding='utf-8') as temp_outputfile:
