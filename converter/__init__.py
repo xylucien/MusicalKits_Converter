@@ -1,5 +1,5 @@
 import errno, os
-from converter import convert, download
+from converter import convert, download, generate_image
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from music21 import *
@@ -28,6 +28,7 @@ def create_app(test_config=None):
         SECRET_KEY="lucien",
         UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache'),
         OUTPUT_FILE = os.path.join(os.getcwd(),'result.abc'),
+        OUTPUT_IMG = os.path.join(os.getcwd(),'result.png'),
         ALLOWED_EXTENSIONS = {'musicxml'}
     )
 
@@ -43,6 +44,7 @@ def create_app(test_config=None):
 
     app.register_blueprint(convert.bp)
     app.register_blueprint(download.bp)
+    app.register_blueprint(generate_image.bp)
 
     app.add_url_rule("/", endpoint="index")
     
