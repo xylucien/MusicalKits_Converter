@@ -7,7 +7,7 @@ before_install:
 - pip install -U pip
 - pip install -U pytest pytest-cov
 - pip install codecov
-- apt-get install lilypond
+- sudo apt-get install lilypond
 script: python3 -m pytest tests/
 after_success:
 - pytest --cov=./
