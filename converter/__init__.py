@@ -2,6 +2,8 @@ import errno, os
 from converter import convert, download
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from music21 import *
+from subprocess import PIPE, Popen
 import stat
 
 def setupAppAndCacheDirectories(app):
@@ -45,5 +47,11 @@ def create_app(test_config=None):
     app.add_url_rule("/", endpoint="index")
     
     bootstrap = Bootstrap(app)
+
+    us = environment.UserSettings()
+    process = Popen(['which' ,'lilypond'], 
+        stdout=PIPE, stderr = PIPE)
+    stdout, stderr = process.communicate()
+    us['lilypondPath'] = stdout.decode().replace('\n', '')
 
     return app
