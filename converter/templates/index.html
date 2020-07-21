@@ -2,7 +2,6 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="/static/css/index.css">
-
 <script type="text/javascript">
     (function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);
 </script>
@@ -10,61 +9,65 @@
 
 
 {% block body %}
-<div class="container">
-    <h1 id = "the_title">MusicXML to ABC Notation Converter</h1>
-    
-    <div id = "main_page">
-        <ul id = "upload_box">
-            <li id = "file-box" >
-                <h1 id="file-button" class="uploadfile">Upload File</h1>
-            </li>   
-
-            <li id="text-box">
-                <h1 id="text-button" class="submittext">Submit Text</h1>
-            </li>  
-        </ul>
-
-        <br style="padding: 30px 0px 0px 0px;">
-
-        <div id = "text">
-            <form method="POST" id="text_input">
-                <textarea name="content" id = "textcontent" form="text_input" rows="15" cols="80"></textarea>
-                <button type ="submit" class="btn btn-primary btn-block" id = "text_submit">Submit</button>
-            </form>
-        </div>
-        
-        <br>
-
-        <div id = "file">
-            <form method="POST" enctype="multipart/form-data" class="box">
-                <div class="box__input">
-                    <svg class="box__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43"><path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z"></path></svg>
-                    <input type="file" name="files" id = "filel" class="box__file">
-                    <label for="filel"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-                    <button type="submit" class="btn btn-success btn-block box__button">Upload</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    
-    <div id = "result_page">    
-        <textarea name="content" id="result_content" rows="15" cols="80"></textarea>
-        <br>
-        <div>
-            <form action='/'>
-                <input class="btn btn-primary btn-block" type="submit" value="Return">
-            </form>
-            <br>
-        </div>
-    
-        <div>
-            <form action='/return-files'>
-                <input class="btn btn-success btn-block" type="submit" value="Download" id = "download">
-            </form>
-        </div>
-    </div>
-
+<div class="alert alert-primary alert-dismissible fade show" id = "alert" role="alert">
+    <div id = "alert_message"></div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
 </div>
+
+<h1 id = "the_title">MusicXML to ABC Converter</h1>
+
+<div id = "main_page">
+    <ul id = "upload_box">
+        <li id = "file-box" >
+            <h1 id="file-button" class="uploadfile">Upload File</h1>
+        </li>   
+
+        <li id="text-box">
+            <h1 id="text-button" class="submittext">Submit Text</h1>
+        </li>  
+    </ul>
+
+    <br style="padding: 30px 0px 0px 0px;">
+
+    <div id = "text">
+        <form method="POST" id="text_input">
+            <textarea name="content" id = "textcontent" form="text_input" rows="15" cols="80"></textarea>
+            <button type ="submit" class="btn btn-primary btn-lg" id = "text_submit"><strong>Submit</strong></button>
+        </form>
+    </div>
     
+    <br>
+
+    <div id = "file">
+        <form method="POST" enctype="multipart/form-data" class="box">
+            <div class="box__input">
+                <svg class="box__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43"><path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z"></path></svg>
+                <input type="file" name="files" id = "filel" class="box__file">
+                <label for="filel"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+                <button type="submit" class="btn btn-primary btn-lg box__button">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id = "result_page">    
+    <textarea name="content" id="result_content" rows="15" cols="80"></textarea>
+    <br>
+    <div>
+        <form action='/'>
+            <input class="btn btn-primary btn-block" type="submit" value="Return">
+        </form>
+        <br>
+    </div>
+
+    <div>
+        <form action='/return-files'>
+            <input class="btn btn-success btn-block" type="submit" value="Download" id = "download">
+        </form>
+    </div>
+</div>
+
 <script src="/static/js/index.js"></script>
 {% endblock %}
