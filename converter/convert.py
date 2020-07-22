@@ -1,10 +1,9 @@
 from flask import Flask
-from flask import Blueprint, current_app, flash, json, Response, render_template, redirect, request, url_for
+from flask import Blueprint, current_app, json, render_template, request
 from subprocess import Popen, PIPE
 from werkzeug.utils import secure_filename
 
 import io, os, sys, tempfile
-
 
 bp = Blueprint("convert", __name__)
 
@@ -30,7 +29,6 @@ def generate_result(result, converted_text):
     if not converted_text:
         result = "There is something wrong with your input. Please check again!\n"
         converted_text = "INVALID"
-    flash(result, 'info')
     return Convert(content=converted_text) 
 
 #secure file name and save to data folder
@@ -46,20 +44,14 @@ def handleTempInput(text_to_write):
     temp_inputfile.write(text_to_write)
     return temp_inputfile
 
-#thinking about how to implement
-def handleTempOutput():
-    pass
-
 def upload_file(): 
     # check if the post request has the file part
     if 'file' not in request.files:
-        #flash(, 'danger')
         return 'No file found!'
     file = request.files['file']
     # if user does not select file, browser also
     # submit an empty part without filename
     if not file.filename:
-        #flash(, 'danger')
         return 'No selected file!'
 
     #if upload is valid
@@ -68,14 +60,12 @@ def upload_file():
         # prompt that upload is successful
         return Convert(filename, True)
     else:
-        #flash(, 'danger')
         return 'File extention name not valid!'
 
 def submit_text():
     task_content = request.form['text']
     #check for empty submission
     if not task_content:
-        #flash(, 'danger')
         return 'You cannot submit empty text!'
     # prompt that submission is successful
     return Convert(task_content, False)
@@ -86,7 +76,7 @@ def to_convert(is_file):
         task = submit_text()
     else:
         task = upload_file()
-    
+
     #check if returns error message
     if not isinstance(task,Convert):
         return json.dumps({'is_success': False, 'message':task, 'result':''})

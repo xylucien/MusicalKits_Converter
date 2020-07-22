@@ -1,1 +1,4 @@
-web: gunicorn app:app
+web: gunicorn
+commands:
+  lilypond_install:
+    command: sudo apt-get lilypond
