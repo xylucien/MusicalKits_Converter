@@ -26,4 +26,4 @@ commands:
                   <preference name="warnings" value="1" />
                   <preference name="writeFormat" value="musicxml" />
                   </settings>
-                  ' > /home/wsgi/.music21sc
+                  ' > /home/wsgi/.music21rc
