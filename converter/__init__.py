@@ -50,10 +50,8 @@ def create_app(test_config=None):
     
     bootstrap = Bootstrap(app)
 
-    us = environment.UserSettings()
     process = Popen(['which' ,'lilypond'], 
         stdout=PIPE, stderr = PIPE)
     stdout, stderr = process.communicate()
-    us['lilypondPath'] = stdout.decode().replace('\n', '')
-
+    environment.set('lilypondPath', stdout.decode().replace('\n', ''))
     return app
