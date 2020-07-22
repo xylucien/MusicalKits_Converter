@@ -78,7 +78,7 @@ def create_app(test_config=None):
         ''')
         f.close()
     except:
-        pass
+        raise
     process = Popen(['which' ,'lilypond'], 
         stdout=PIPE, stderr = PIPE)
     stdout, stderr = process.communicate()
