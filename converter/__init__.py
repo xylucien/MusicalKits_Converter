@@ -18,6 +18,11 @@ def setupAppAndCacheDirectories(app):
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
+    try:
+        os.makedirs('/home/wsgi')
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
