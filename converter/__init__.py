@@ -18,8 +18,6 @@ def setupAppAndCacheDirectories(app):
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
-    if not os.path.isdir(os.environ['HOME']):
-        raise
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
@@ -49,7 +47,7 @@ def create_app(test_config=None):
     app.register_blueprint(generate_image.bp)
 
     app.add_url_rule("/", endpoint="index")
-    
+    os.environ['HOME'] = os.getcwd()
     bootstrap = Bootstrap(app)
     try: 
         f = open(pathlib.Path(os.environ['HOME']) / ".music21rc", "w")
