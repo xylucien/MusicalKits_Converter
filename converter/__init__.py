@@ -4,7 +4,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from music21 import *
 from subprocess import PIPE, Popen
-import stat
+import pathlib, stat
 
 def setupAppAndCacheDirectories(app):
     # ensure the instance folder exists
@@ -15,6 +15,11 @@ def setupAppAndCacheDirectories(app):
             raise
     try:
         os.makedirs('musicxmlCache')
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+    try:
+        os.makedirs(os.environ['HOME'])
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
@@ -50,7 +55,7 @@ def create_app(test_config=None):
     
     bootstrap = Bootstrap(app)
     try: 
-        f = open("/home/wsgi/.music21rc", "w")
+        f = open(pathlib.Path(os.environ['HOME']) / ".music21rc", "w")
         f.write('''
         <settings encoding="utf-8">
         <preference name="autoDownload" value="deny" />
@@ -78,7 +83,7 @@ def create_app(test_config=None):
         ''')
         f.close()
     except:
-        pass
+        raise
     process = Popen(['which' ,'lilypond'], 
         stdout=PIPE, stderr = PIPE)
     stdout, stderr = process.communicate()
