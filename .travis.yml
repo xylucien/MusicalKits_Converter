@@ -12,7 +12,7 @@ before_install:
 - sudo apt-get install xvfb
 - Xvfb :0 -screen 0 1280x768x24&
 - export DISPLAY=:0
-script: sudo python3 -m pytest tests/
+script: python3 -m pytest tests/
 after_success:
 - pytest --cov=./
 - codecov
