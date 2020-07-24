@@ -11,6 +11,8 @@ commands:
     command: wget https://cdn.jsdelivr.net/musescore/v3.4.2/MuseScore-3.4.2-x86_64.AppImage
   musescore_install:
     command: sudo ./MuseScore-3.4.2-x86_64.AppImage install
+  Xvfb_download:
+    command: sudo yum install Xvfb
   Xvfb_configure:
     command: Xvfb :0 -screen 0 1280x768x24&
   Display_configure:
