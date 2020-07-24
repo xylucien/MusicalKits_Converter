@@ -4,8 +4,8 @@ python:
 - 3.6
 before_install:
 - python --version
-- pip install -U pip
-- pip install -U pytest pytest-cov
+- pip install pip
+- pip install pytest pytest-cov
 - pip install codecov
 - sudo apt-get install lilypond
 - sudo apt-get install musescore
