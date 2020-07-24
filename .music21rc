@@ -1,0 +1,23 @@
+<settings encoding="utf-8">
+  <preference name="autoDownload" value="deny" />
+  <preference name="braillePath" />
+  <preference name="debug" value="0" />
+  <preference name="directoryScratch" />
+  <preference name="graphicsPath" value="/usr/bin/eog" />
+  <preference name="ipythonShowFormat" value="ipython.musicxml.png" />
+  <preference name="lilypondBackend" value="ps" />
+  <preference name="lilypondFormat" value="pdf" />
+  <preference name="lilypondPath" value="/usr/bin/lilypond" />
+  <preference name="lilypondVersion" />
+  <localCorporaSettings />
+  <localCorpusSettings />
+  <preference name="manualCoreCorpusPath" />
+  <preference name="midiPath" value="/home/lucien/.local/bin/mscore-portable" />
+  <preference name="musescoreDirectPNGPath" value="/home/lucien/.local/bin/mscore-portable" />
+  <preference name="musicxmlPath" value="/home/lucien/.local/bin/mscore-portable" />
+  <preference name="pdfPath" value="/home/lucien/.local/bin/mscore-portable" />
+  <preference name="showFormat" value="musicxml" />
+  <preference name="vectorPath" value="/home/lucien/.local/bin/mscore-portable" />
+  <preference name="warnings" value="1" />
+  <preference name="writeFormat" value="musicxml" />
+  </settings>
