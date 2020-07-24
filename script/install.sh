@@ -1,4 +1,4 @@
-pip3 install -r requirements.txt
+pip3 install -r ../requirements.txt
 wget https://lilypond.org/download/binaries/linux-64/lilypond-2.20.0-1.linux-64.sh
 sudo sh lilypond-2.20.0-1.linux-64.sh
 wget https://cdn.jsdelivr.net/musescore/v3.4.2/MuseScore-3.4.2-x86_64.AppImage
