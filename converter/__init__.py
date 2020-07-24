@@ -29,6 +29,7 @@ def create_app(test_config=None):
         UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache'),
         OUTPUT_FILE = os.path.join(os.getcwd(),'result.abc'),
         OUTPUT_IMG = os.path.join(os.getcwd(),'result.png'),
+        OUTPUT_ZIP = os.path.join(os.getcwd(),'result.zip'),
         ALLOWED_EXTENSIONS = {'musicxml'}
     )
 
