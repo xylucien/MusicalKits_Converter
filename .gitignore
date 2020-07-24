@@ -9,3 +9,6 @@ result*
 musicxmlCache/
 .vscode/
 aws/
+.local/
+.config/
+.cache/
