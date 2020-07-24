@@ -9,7 +9,7 @@ before_install:
 - pip install codecov
 - sudo apt-get install lilypond
 - sudo apt-get install musescore
-- sudo yum install Xvfb
+- sudo apt-get install Xvfb
 - Xvfb :0 -screen 0 1280x768x24&
 - export DISPLAY:=0
 script: python3 -m pytest tests/
