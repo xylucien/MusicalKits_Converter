@@ -11,7 +11,7 @@ before_install:
 - sudo apt-get install musescore
 - sudo apt-get install xvfb
 - Xvfb :0 -screen 0 1280x768x24&
-- export DISPLAY:=0
+- export DISPLAY=:0
 script: python3 -m pytest tests/
 after_success:
 - pytest --cov=./
