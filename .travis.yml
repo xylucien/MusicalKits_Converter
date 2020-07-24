@@ -3,12 +3,12 @@ python:
 - 3.6
 before_install:
 - python --version
-- pip install pip
 - pip install pytest pytest-cov
 - pip install codecov
 - sudo apt-get install lilypond
-- sudo apt-get install musescore
 - sudo apt-get install xvfb
+- wget https://cdn.jsdelivr.net/musescore/v3.4.2/MuseScore-3.4.2-x86_64.AppImage
+- sudo ./MuseScore-3.4.2-x86_64.AppImage install
 - Xvfb :0 -screen 0 1280x768x24&
 - export DISPLAY=:0
 script: python3 -m pytest
