@@ -8,6 +8,10 @@ before_install:
 - pip install -U pytest pytest-cov
 - pip install codecov
 - sudo apt-get install lilypond
+- sudo apt-get install musescore
+- sudo apt-get install xvfb
+- Xvfb :0 -screen 0 1280x768x24&
+- export DISPLAY=:0
 script: python3 -m pytest tests/
 after_success:
 - pytest --cov=./

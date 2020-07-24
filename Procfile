@@ -15,7 +15,3 @@ commands:
     command: sudo yum install Xvfb
   Xvfb_configure:
     command: Xvfb :0 -screen 0 1280x768x24&
-  Display_configure:
-    command: export DISPLAY=:0
-  Display_configure2:
-    command: export DISPLAY=:0

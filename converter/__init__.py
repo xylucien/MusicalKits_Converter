@@ -1,5 +1,5 @@
 import errno, os
-from converter import convert, download, generate_image
+from converter import convert, download, generate_image, generate_sound
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from music21 import *
@@ -45,6 +45,7 @@ def create_app(test_config=None):
     app.register_blueprint(convert.bp)
     app.register_blueprint(download.bp)
     app.register_blueprint(generate_image.bp)
+    app.register_blueprint(generate_sound.bp)
 
     app.add_url_rule("/", endpoint="index")
     os.environ['HOME'] = os.getcwd()
