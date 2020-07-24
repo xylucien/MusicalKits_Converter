@@ -6,8 +6,7 @@ bp = Blueprint("get_image", __name__)
 @bp.route('/get-image/')
 def generate_image():
     try:
-        converter.parse('result.abc').write('lilypond.png', 'result')
-        return send_file(current_app.config['OUTPUT_IMG'], 
+        return send_file(converter.parse('result.abc').write('musicxml.png'), 
             attachment_filename="result.png" ,as_attachment=True, cache_timeout=0)
     except Exception as e:
         flash(str(e), 'danger')

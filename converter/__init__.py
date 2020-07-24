@@ -79,8 +79,18 @@ def create_app(test_config=None):
         f.close()
     except:
         raise
-    process = Popen(['which' ,'lilypond'], 
+    process1 = Popen(['which' ,'lilypond'], 
         stdout=PIPE, stderr = PIPE)
-    stdout, stderr = process.communicate()
+    stdout, stderr = process1.communicate()
     environment.set('lilypondPath', stdout.decode().replace('\n', ''))
+
+    process2 = Popen(['which' ,'mscore-portable'], 
+        stdout=PIPE, stderr = PIPE)
+    stdout, stderr = process2.communicate()
+    environment.set('musicxmlPath', stdout.decode().replace('\n', ''))
+    environment.set('pdfPath', stdout.decode().replace('\n', ''))
+    environment.set('midiPath', stdout.decode().replace('\n', ''))
+    environment.set('vectorPath', stdout.decode().replace('\n', ''))
+    environment.set('musescoreDirectPNGPath', stdout.decode().replace('\n', ''))
+    
     return app
