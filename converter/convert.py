@@ -1,6 +1,6 @@
 from flask import Flask
-from flask import Blueprint, current_app, json, render_template, request
-from subprocess import Popen, PIPE
+from flask import Blueprint, current_app, g, json, render_template, request
+from music21 import *
 from werkzeug.utils import secure_filename
 
 import io, os, sys, tempfile
@@ -12,9 +12,10 @@ def index():
     return render_template('index.html')
 
 class Convert:
-    def __init__(self, content, is_file = False):
+    def __init__(self, content, is_file = False, formats = ''):
         self.is_file = is_file
         self.content = content
+        self.formats = formats
 
 #helper functions
 
@@ -38,11 +39,13 @@ def handleFileSave(raw_file):
     return filename
 
 #get user input and write into a temp file
-def handleTempInput(text_to_write):
-    temp_inputfile = tempfile.NamedTemporaryFile(mode='w+', 
-        encoding='utf-8', delete=True, suffix='.musicxml')
-    temp_inputfile.write(text_to_write)
-    return temp_inputfile
+def handleTextInput(text_to_write, save_format):
+    inputfile = io.open( os.path.join (current_app.config['UPLOAD_FOLDER'], 'user_upload' + save_format), 
+        'w', encoding='utf-8')
+    #tempfile.NamedTemporaryFile(mode='w+', 
+    #    encoding='utf-8', delete=True, suffix='.musicxml')
+    inputfile.write(text_to_write)
+    return inputfile
 
 def upload_file(): 
     # check if the post request has the file part
@@ -64,11 +67,12 @@ def upload_file():
 
 def submit_text():
     task_content = request.form['text']
+    file_format = request.form['format']
     #check for empty submission
     if not task_content:
         return 'You cannot submit empty text!'
     # prompt that submission is successful
-    return Convert(task_content, False)
+    return Convert(task_content, False, file_format)
 
 @bp.route('/convert_result/<is_file>', methods=['GET', 'POST'])
 def to_convert(is_file):
@@ -81,36 +85,27 @@ def to_convert(is_file):
     if not isinstance(task,Convert):
         return json.dumps({'is_success': False, 'message':task, 'result':''})
     converted_text = ''
-    is_success = False
     #if user copy-pasted
     if not task.is_file:
-        temp_inputfile = handleTempInput(task.content)
+        temp_inputfile = handleTextInput(task.content, task.formats)
         target_path = temp_inputfile.name
     #if user uploaded a file
     else:
         target_path = os.path.join(current_app.config['UPLOAD_FOLDER'], task.content)
     
-    #execute the converter script and listen for result
-    process = Popen(['converter/xml2abc.py', target_path], 
-        stdout=PIPE, stderr = PIPE, encoding='utf-8')
-    
-    #listen for success message
-    stdout, stderr = process.communicate()
-    result = stdout
-
-    #load error message
-    if(process.returncode!=0 or not result): 
-        result = "There is something wrong with your input. Please check again!"
-    #read result from the file generated from script
-    else: 
-        with io.open(current_app.config['OUTPUT_FILE'], "r+", encoding='utf-8') as temp_outputfile:
-            converted_text = temp_outputfile.read()
-            is_success = True
+    #load file to Music21.Score
+    try:
+        score = converter.parse(target_path)
+        score.write('musicxml', current_app.config['PROCESS_FILE'])
+    #return error message immediately if the file is corrupted/not valid
+    except:
+        message = 'There is something wrong with your input. Please check again!'
+        return json.dumps({'is_success': False, 'message':message, 'result':''})
     
     #temp file automatically deleted on close()
-    if task.is_file == 0: temp_inputfile.close()
+    #if task.is_file == 0: temp_inputfile.close()
 
     return json.dumps({
-        'is_success':is_success,
-        'message':result,
-        'result':converted_text})
+        'is_success': True,
+        'message':"Conversion successful!",
+        'result':"Upload sucess! Choose ur option"})

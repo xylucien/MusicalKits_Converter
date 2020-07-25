@@ -11,9 +11,10 @@ var isAdvancedUpload = function()
 var forms = document.querySelectorAll( '.box' );
 var text_form = document.getElementById('text_input');
 
-function logSubmit(e) {
+function textSubmit(e) {
     var form_data = new FormData();
         form_data.append('text', document.getElementById("textcontent").value);
+        form_data.append('format', document.getElementById("textformat").value);
         $.ajax({
             type: 'POST',
             url: '/convert_result/submission',
@@ -26,7 +27,7 @@ function logSubmit(e) {
                     var result_text = result_data.result;
                     document.title = "Result Page";
                     document.getElementById('the_title').innerHTML = "Result";
-                    document.getElementById('result_content').innerHTML = result_text;
+                    //document.getElementById('result_content').innerHTML = result_text;
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
                 }
@@ -35,14 +36,16 @@ function logSubmit(e) {
                 $('#text').slideUp(500);
             },
             error: function(data){
+                window.location.href = '/';                
                 document.getElementById('alert_message').innerHTML = "An unknown error occurred";
                 document.getElementById('alert').style.display = 'block';
-                window.location.href = '/';
             }
         });
         e.preventDefault();
 }
-text_form.addEventListener('submit', logSubmit);
+
+text_form.addEventListener('submit', textSubmit);
+
 var upload_file = false;
 Array.prototype.forEach.call( forms, function( form )
 {
@@ -112,7 +115,7 @@ Array.prototype.forEach.call( forms, function( form )
                     var result_text = result_data.result;
                     document.title = "Result Page";
                     document.getElementById('the_title').innerHTML = "Result";
-                    document.getElementById('result_content').innerHTML = result_text;
+                    //document.getElementById('result_content').innerHTML = result_text;
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
                 }

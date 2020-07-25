@@ -1,5 +1,5 @@
 import errno, os
-from converter import convert, download, generate_image, generate_sound
+from converter import convert, generate_file, generate_image, generate_sound
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from music21 import *
@@ -27,10 +27,10 @@ def create_app(test_config=None):
         # a default secret that should be overridden by instance config
         SECRET_KEY="lucien",
         UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache'),
-        OUTPUT_FILE = os.path.join(os.getcwd(),'result.abc'),
-        OUTPUT_IMG = os.path.join(os.getcwd(),'result.png'),
+        OUTPUT_ABC_FILE = os.path.join(os.getcwd(),'result.abc'),
         OUTPUT_ZIP = os.path.join(os.getcwd(),'result.zip'),
-        ALLOWED_EXTENSIONS = {'musicxml'}
+        PROCESS_FILE = os.path.join(os.getcwd(),'upload_data.musicxml'),
+        ALLOWED_EXTENSIONS = {'musicxml', 'mxl', 'abc', 'midi', 'mid', 'capx', 'scl'}
     )
 
     if test_config is None:
@@ -44,7 +44,7 @@ def create_app(test_config=None):
     # apply the blueprints to the app
 
     app.register_blueprint(convert.bp)
-    app.register_blueprint(download.bp)
+    app.register_blueprint(generate_file.bp)
     app.register_blueprint(generate_image.bp)
     app.register_blueprint(generate_sound.bp)
 

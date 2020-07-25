@@ -33,6 +33,13 @@
 
     <div id = "text">
         <form method="POST" id="text_input">
+            <label for="textformat">Choose a format:</label>
+            <select id="textformat" form="text_input">
+                <option value=".musicxml">MusicXML</option>
+                <option value=".abc">ABC</option>
+                <option value=".ly">Lilypond</option>
+                <option value=".mscz">MuseData</option>
+            </select>
             <textarea name="content" id = "textcontent" form="text_input" rows="15" cols="80"></textarea>
             <button type ="submit" class="btn btn-primary btn-lg" id = "text_submit"><strong>Submit</strong></button>
         </form>
@@ -53,33 +60,41 @@
 </div>
 
 <div id = "result_page">    
-    <textarea name="content" id="result_content" rows="15" cols="80"></textarea>
+    <!---textarea name="content" id="result_content" rows="15" cols="80"></textarea--->
     <br>
     <div>
         <form action='/'>
-            <input class="btn btn-primary btn-block" type="submit" value="Return">
+            <input class="btn btn-primary btn-block" type="submit" value="Return to Main Page">
         </form>
         <br>
     </div>
 
     <div>
-        <form action='/get-image'>
-            <input class="btn btn-info btn-block" type="submit" value="Get Visualized Score">
+        <form action='/get-image' id = 'get_image'>
+            <input class="btn btn-info btn-block" type="submit" value="Get Visualized Scores">
         </form>
         <br>
     </div>
 
     <div>
-        <form action='/get-sound'>
-            <input class="btn btn-light btn-block" type="submit" value="Get Sound File">
+        <form action='/get-sound' id = 'get_sound'>
+            <input class="btn btn-light btn-block" type="submit" value="Get Sound Tracks">
         </form>
         <br>
     </div>
 
-    <div>
-        <form action='/return-files'>
-            <input class="btn btn-success btn-block" type="submit" value="Download" id = "download">
-        </form>
+    <div class="btn-group dropright btn-block">
+        <button type="button" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Get Files
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/get-file/musicxml">MusicXML</a>
+            <!---a class="dropdown-item" href="/get-file/lilypond">Lilypond</a--->
+            <a class="dropdown-item" href="/get-file/abc">ABC</a>
+            <!---a class="dropdown-item" href="/get-file/braille">Braille</a--->
+            <a class="dropdown-item" href="/get-file/vexflow">Vexflow</a>
+            <!---a class="dropdown-item" href="/get-file/scala">Scala</a--->
+          </div>
     </div>
 </div>
 

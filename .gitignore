@@ -12,3 +12,4 @@ aws/
 .local/
 .config/
 .cache/
+upload_data.musicxml

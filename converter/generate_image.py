@@ -8,17 +8,22 @@ bp = Blueprint("get_image", __name__)
 @bp.route('/get-image/')
 def generate_image():
     try:
+        #create zip file for download
         zipObj = ZipFile(current_app.config['OUTPUT_ZIP'], 'w')
-        a = converter.parse('musicxmlCache/ActorPreludeSample.musicxml').write('musicxml.png')
+        #get temp result images path
+        a = converter.parse(current_app.config['PROCESS_FILE']).write('musicxml.png')
         
-        if a[-6:] == '-1.png':
+        #detect for multiple outputs
+        #1<num<10
+        if '-1.png' in a:
             b = a[:-6]
             for i in range(1,10):
                 try:
                     zipObj.write(b+'-'+str(i)+'.png')
                 except:
                     break
-        elif a[-7:] == '-01.png':
+        #10<num<100
+        elif '-01.png' in a:
             b = a[:-7]
             for i in range(1,10):
                 try:
@@ -29,8 +34,9 @@ def generate_image():
                 try:
                     zipObj.write(b+'-'+str(i)+'.png')
                 except:
-                    break                
-        elif a[-8:] == '-001.png':
+                    break
+        #100<num<1000                
+        elif '-001.png' in a:
             b = a[:-8]
             for i in range(1,10):
                 try:
