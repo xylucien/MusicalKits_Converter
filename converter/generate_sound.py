@@ -1,4 +1,4 @@
-from flask import current_app, Blueprint, g, send_file, flash, redirect
+from flask import current_app, Blueprint, flash, send_file, redirect
 from music21 import *
 
 bp = Blueprint("get_sound", __name__)

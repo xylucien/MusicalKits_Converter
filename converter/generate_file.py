@@ -1,4 +1,4 @@
-from flask import current_app, Blueprint, send_file, flash, redirect
+from flask import current_app, Blueprint, flash, send_file, redirect
 from music21 import *
 from subprocess import Popen, PIPE
 

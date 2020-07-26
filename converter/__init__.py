@@ -1,10 +1,9 @@
-import errno, os
+import errno, os, pathlib, stat
 from converter import convert, generate_file, generate_image, generate_sound
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from music21 import *
 from subprocess import PIPE, Popen
-import pathlib, stat
 
 def setupAppAndCacheDirectories(app):
     # ensure the instance folder exists
