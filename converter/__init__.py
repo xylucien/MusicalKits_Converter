@@ -19,7 +19,7 @@ def setupAppAndCacheDirectories(app):
             raise
 
 def create_app(test_config=None):
-    """Create and configure an instance of the Flask application."""
+    # Create and configure an instance of the Flask application.
     app = Flask(__name__, instance_relative_config=True)
     
     app.config.from_mapping(
@@ -40,17 +40,21 @@ def create_app(test_config=None):
         app.config.update(test_config)
 
     setupAppAndCacheDirectories(app)
-    # apply the blueprints to the app
+    # apply blueprints
 
     app.register_blueprint(convert.bp)
     app.register_blueprint(generate_file.bp)
     app.register_blueprint(generate_image.bp)
     app.register_blueprint(generate_sound.bp)
 
+    # set home url
     app.add_url_rule("/", endpoint="index")
     os.environ['HOME'] = os.getcwd()
+
+    # load Bootstrap
     bootstrap = Bootstrap(app)
 
+    # configure music21 settings
     process1 = Popen(['which' ,'lilypond'], 
         stdout=PIPE, stderr = PIPE)
     stdout, stderr = process1.communicate()
