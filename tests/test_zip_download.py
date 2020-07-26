@@ -18,7 +18,7 @@ def test_Download_ABC(test_client):
         '/get-file/abc', follow_redirects=True
     )
     assert response.status_code == 200
-    #ABC format check
+    # ABC format check
     assert b'X:' in response.data and b'T:' in response.data
 
 def test_Download_MusicXML(test_client):
@@ -26,7 +26,7 @@ def test_Download_MusicXML(test_client):
         '/get-file/musicxml', follow_redirects=True
     )
     assert response.status_code == 200
-    #XML format check
+    # XML format check
     assert b'<?xml version="1.0" encoding="utf-8"?>' in response.data
 
 def test_Download_Vexflow(test_client):
@@ -34,7 +34,7 @@ def test_Download_Vexflow(test_client):
         '/get-file/vexflow', follow_redirects=True
     )
     assert response.status_code == 200
-    #HTML format check
+    # HTML format check
     assert b'!DOCTYPE html' in response.data
 
 def test_Download_MIDI(test_client):
@@ -42,7 +42,7 @@ def test_Download_MIDI(test_client):
         '/get-sound', follow_redirects=True
     )
     assert response.status_code == 200
-    #MIDI format header check
+    # MIDI format header check
     assert b'MThd' in response.data
 
 def test_Download_PNG(test_client):
@@ -50,10 +50,11 @@ def test_Download_PNG(test_client):
         '/get-image', follow_redirects=True
     )
     assert response.status_code == 200
-    #zip format header check
+    # zip format header check
     assert b'PK' in response.data
 
 def test_zip_file_integrity(test_client):
     test_zip = zipfile.ZipFile(current_app.config['OUTPUT_ZIP'])
-    #zip file numbers check
+    # zip file numbers check
+    # in this case, ActorPreludeSample.musicxml should produce 18 images in the zip file
     assert len(test_zip.namelist()) == 18    

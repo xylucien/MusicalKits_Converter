@@ -47,6 +47,7 @@ def generate_image():
         result_image_path = converter.parse(current_app.config['PROCESS_FILE']).write('musicxml.png')
         
         image_range, image_temp_prefix = get_range_and_prefix(result_image_path)
+        # limit imposed by music21 library
         max_image_number = 999
 
         # only one image
