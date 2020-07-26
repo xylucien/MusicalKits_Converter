@@ -16,42 +16,42 @@ def generate_image():
         
         #detect for multiple outputs
         #1 < image num < 10
-        if '-1.png' in df:
-            b = result_image_path[:-6]
+        if '-1.png' in result_image_path:
+            image_temp_prefix = result_image_path[:-6]
             for i in range(1,10):
                 try:
-                    zipObj.write(b+'-'+str(i)+'.png')
+                    zipObj.write(image_temp_prefix+'-'+str(i)+'.png')
                 except:
                     break
         #10 < image num < 100
         elif '-01.png' in result_image_path:
-            b = result_image_path[:-7]
+            image_temp_prefix = result_image_path[:-7]
             for i in range(1,10):
                 try:
-                    zipObj.write(b+'-0'+str(i)+'.png')
+                    zipObj.write(image_temp_prefix+'-0'+str(i)+'.png')
                 except:
                     break
             for i in range(10,100):
                 try:
-                    zipObj.write(b+'-'+str(i)+'.png')
+                    zipObj.write(image_temp_prefix+'-'+str(i)+'.png')
                 except:
                     break
         #100 < image num < 1000                
         elif '-001.png' in result_image_path:
-            b = result_image_path[:-8]
+            image_temp_prefix = result_image_path[:-8]
             for i in range(1,10):
                 try:
-                    zipObj.write(b+'-00'+str(i)+'.png')
+                    zipObj.write(image_temp_prefix+'-00'+str(i)+'.png')
                 except:
                     break
             for i in range(10,100):
                 try:
-                    zipObj.write(b+'-0'+str(i)+'.png')
+                    zipObj.write(image_temp_prefix+'-0'+str(i)+'.png')
                 except:
                     break 
             for i in range(100,1000):
                 try:
-                    zipObj.write(b+'-'+str(i)+'.png')
+                    zipObj.write(image_temp_prefix+'-'+str(i)+'.png')
                 except:
                     break
         #only one image
