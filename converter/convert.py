@@ -101,9 +101,6 @@ def to_convert(is_file):
     except:
         message = 'There is something wrong with your input. Please check again!'
         return json.dumps({'is_success': False, 'message':message, 'result':''})
-    
-    #temp file automatically deleted on close()
-    #if task.is_file == 0: temp_inputfile.close()
 
     return json.dumps({
         'is_success': True,

@@ -27,7 +27,6 @@ function textSubmit(e) {
                     var result_text = result_data.result;
                     document.title = "Result Page";
                     document.getElementById('the_title').innerHTML = "Result";
-                    //document.getElementById('result_content').innerHTML = result_text;
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
                 }
@@ -115,7 +114,6 @@ Array.prototype.forEach.call( forms, function( form )
                     var result_text = result_data.result;
                     document.title = "Result Page";
                     document.getElementById('the_title').innerHTML = "Result";
-                    //document.getElementById('result_content').innerHTML = result_text;
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
                 }

@@ -38,7 +38,7 @@ def test_upload_NonvalidFormat(test_client):
     #Test can detect invalid musicxml
     data = {}
     data = {key: str(value) for key, value in data.items()}
-    data['file'] = open("tests/sample.x", "rb")
+    data['file'] = open("tests/invalid_format.x", "rb")
     response = test_client.post(
         '/convert_result/upload', data=data, follow_redirects=True,
         content_type='multipart/form-data'
