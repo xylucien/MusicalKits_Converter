@@ -29,7 +29,7 @@ def create_app(test_config=None):
         OUTPUT_ABC_FILE = os.path.join(os.getcwd(),'result.abc'),
         OUTPUT_ZIP = os.path.join(os.getcwd(),'result.zip'),
         PROCESS_FILE = os.path.join(os.getcwd(),'upload_data.musicxml'),
-        ALLOWED_EXTENSIONS = {'musicxml', 'mxl', 'abc', 'midi', 'mid', 'capx', 'scl'}
+        ALLOWED_EXTENSIONS = {'musicxml', 'mxl', 'abc', 'midi', 'mid'}
     )
 
     if test_config is None:

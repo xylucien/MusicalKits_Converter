@@ -1,6 +1,18 @@
 import io, zipfile
 from flask import current_app
 
+def test_init(test_client):
+    # update upload_data.musicxml
+    # use the long text for testing
+    data = {}
+    data = {key: str(value) for key, value in data.items()}
+    data['file'] = open("tests/testFiles/ActorPreludeSample.musicxml", "rb")
+    response = test_client.post(
+        '/convert_result/upload', data=data, follow_redirects=True,
+        content_type='multipart/form-data'
+    )
+    assert b'"is_success": true' in response.data
+
 def test_Download_ABC(test_client):
     response = test_client.post(
         '/get-file/abc', follow_redirects=True
@@ -44,4 +56,4 @@ def test_Download_PNG(test_client):
 def test_zip_file_integrity(test_client):
     test_zip = zipfile.ZipFile(current_app.config['OUTPUT_ZIP'])
     #zip file numbers check
-    assert len(test_zip.namelist()) > 1    
+    assert len(test_zip.namelist()) == 18    
