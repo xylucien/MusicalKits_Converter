@@ -5,7 +5,7 @@ import os
 bp = Blueprint("get_image", __name__)
 
 #download result image
-@bp.route('/get-image/')
+@bp.route('/get-image/', methods=['GET', 'POST'])
 def generate_image():
     try:
         #create zip file for download
@@ -14,7 +14,7 @@ def generate_image():
         a = converter.parse(current_app.config['PROCESS_FILE']).write('musicxml.png')
         
         #detect for multiple outputs
-        #1<num<10
+        #1 < image num < 10
         if '-1.png' in a:
             b = a[:-6]
             for i in range(1,10):
@@ -22,7 +22,7 @@ def generate_image():
                     zipObj.write(b+'-'+str(i)+'.png')
                 except:
                     break
-        #10<num<100
+        #10 < image num < 100
         elif '-01.png' in a:
             b = a[:-7]
             for i in range(1,10):
@@ -35,7 +35,7 @@ def generate_image():
                     zipObj.write(b+'-'+str(i)+'.png')
                 except:
                     break
-        #100<num<1000                
+        #100 < image num < 1000                
         elif '-001.png' in a:
             b = a[:-8]
             for i in range(1,10):
@@ -53,6 +53,7 @@ def generate_image():
                     zipObj.write(b+'-'+str(i)+'.png')
                 except:
                     break
+        #only one image
         else:
             zipObj.write(a)
         zipObj.close()

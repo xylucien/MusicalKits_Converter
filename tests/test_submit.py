@@ -10,9 +10,9 @@ def test_submit_IncorrectMusicXml(test_client):
     )
     assert b'"is_success": false' in response.data
 
-def test_submit_CorrectMusicXml(test_client):
-    #Test can upload and convert valid text.
-    with open('tests/sample.musicxml', 'r') as myfile:
+def test_submit_CorrectMusicXml_long(test_client):
+    #Test can upload and convert long valid text.
+    with open('tests/ActorPreludeSample.musicxml', 'r') as myfile:
         filedata = myfile.read()
     data = {"text": filedata, "format": ".musicxml"}
     data = {key: str(value) for key, value in data.items()}

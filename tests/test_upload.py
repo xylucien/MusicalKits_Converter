@@ -23,6 +23,17 @@ def test_upload_CorrectMusicXml(test_client):
     )
     assert b'"is_success": true' in response.data
 
+def test_upload_Midi(test_client):
+    #Test can upload and convert valid midi
+    data = {}
+    data = {key: str(value) for key, value in data.items()}
+    data['file'] = open("tests/Super_Mario_64.mid", "rb")
+    response = test_client.post(
+        '/convert_result/upload', data=data, follow_redirects=True,
+        content_type='multipart/form-data'
+    )
+    assert b'"is_success": true' in response.data
+
 def test_upload_NonvalidFormat(test_client):
     #Test can detect invalid musicxml
     data = {}
