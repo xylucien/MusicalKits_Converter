@@ -12,4 +12,5 @@ aws/
 .local/
 .config/
 .cache/
+.dbus/
 upload_data.musicxml

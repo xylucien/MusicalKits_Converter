@@ -63,7 +63,7 @@ def upload_file():
         # prompt that upload is successful
         return Convert(filename, True)
     else:
-        return 'File extention name not valid!'
+        return 'File extension name not valid!'
 
 def submit_text():
     task_content = request.form['text']
