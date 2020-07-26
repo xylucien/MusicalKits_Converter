@@ -1,4 +1,6 @@
 from music21 import *
 
 def test_midi():
-    a = converter.parse('tests/sample.musicxml').write('midi')
+    result = converter.parse('tests/testFiles/Chant.musicxml').write('midi')
+def test_midi_long():
+    result = converter.parse('tests/testFiles/ActorPreludeSample.musicxml').write('midi')

@@ -1,10 +1,9 @@
-import errno, os
-from converter import convert, download, generate_image, generate_sound
+import errno, os, pathlib, stat
+from converter import convert, generate_file, generate_image, generate_sound
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from music21 import *
 from subprocess import PIPE, Popen
-import pathlib, stat
 
 def setupAppAndCacheDirectories(app):
     # ensure the instance folder exists
@@ -20,16 +19,17 @@ def setupAppAndCacheDirectories(app):
             raise
 
 def create_app(test_config=None):
-    """Create and configure an instance of the Flask application."""
+    # Create and configure an instance of the Flask application.
     app = Flask(__name__, instance_relative_config=True)
     
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
         SECRET_KEY="lucien",
         UPLOAD_FOLDER = os.path.join(os.getcwd(),'musicxmlCache'),
-        OUTPUT_FILE = os.path.join(os.getcwd(),'result.abc'),
-        OUTPUT_IMG = os.path.join(os.getcwd(),'result.png'),
-        ALLOWED_EXTENSIONS = {'musicxml'}
+        OUTPUT_ABC_FILE = os.path.join(os.getcwd(),'result.abc'),
+        OUTPUT_ZIP = os.path.join(os.getcwd(),'result.zip'),
+        PROCESS_FILE = os.path.join(os.getcwd(),'upload_data.musicxml'),
+        ALLOWED_EXTENSIONS = {'musicxml', 'mxl', 'abc', 'midi', 'mid'}
     )
 
     if test_config is None:
@@ -40,46 +40,21 @@ def create_app(test_config=None):
         app.config.update(test_config)
 
     setupAppAndCacheDirectories(app)
-    # apply the blueprints to the app
+    # apply blueprints
 
     app.register_blueprint(convert.bp)
-    app.register_blueprint(download.bp)
+    app.register_blueprint(generate_file.bp)
     app.register_blueprint(generate_image.bp)
     app.register_blueprint(generate_sound.bp)
 
+    # set home url
     app.add_url_rule("/", endpoint="index")
     os.environ['HOME'] = os.getcwd()
+
+    # load Bootstrap
     bootstrap = Bootstrap(app)
-    try: 
-        f = open(pathlib.Path(os.environ['HOME']) / ".music21rc", "w")
-        f.write('''
-        <settings encoding="utf-8">
-        <preference name="autoDownload" value="deny" />
-        <preference name="braillePath" />
-        <preference name="debug" value="0" />
-        <preference name="directoryScratch" />
-        <preference name="graphicsPath" value="/usr/bin/eog" />
-        <preference name="ipythonShowFormat" value="ipython.musicxml.png" />
-        <preference name="lilypondBackend" value="ps" />
-        <preference name="lilypondFormat" value="pdf" />
-        <preference name="lilypondPath" value="/usr/bin/lilypond" />
-        <preference name="lilypondVersion" />
-        <localCorporaSettings />
-        <localCorpusSettings />
-        <preference name="manualCoreCorpusPath" />
-        <preference name="midiPath" />
-        <preference name="musescoreDirectPNGPath" />
-        <preference name="musicxmlPath" value="/usr/bin/musescore" />
-        <preference name="pdfPath" />
-        <preference name="showFormat" value="musicxml" />
-        <preference name="vectorPath" />
-        <preference name="warnings" value="1" />
-        <preference name="writeFormat" value="musicxml" />
-        </settings>
-        ''')
-        f.close()
-    except:
-        raise
+
+    # configure music21 settings
     process1 = Popen(['which' ,'lilypond'], 
         stdout=PIPE, stderr = PIPE)
     stdout, stderr = process1.communicate()

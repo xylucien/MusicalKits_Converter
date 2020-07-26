@@ -11,7 +11,7 @@ setup(
     maintainer="Lucien",
     maintainer_email="xinyu.liu@sbs.org",
     description="Test Package",
-    long_description="This is my personal project. It aims to provide a web service to convert between different music sheet format, which, in this case, MusicXML to ABCNotation.",
+    long_description="This is my personal project. It aims to provide a web service to convert between different music sheet formats.",
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
