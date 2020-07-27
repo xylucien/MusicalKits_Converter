@@ -9,14 +9,11 @@
 
 
 {% block body %}
-<div class="alert alert-primary alert-dismissible fade show" id = "alert" role="alert">
-    <div id = "alert_message"></div>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<div id = "alert_box">
+    
 </div>
 
-<h1 id = "the_title">MusicXML to ABC Converter</h1>
+<h1 id = "the_title" class = "nonselect">MusicXML to ABC Converter</h1>
 
 <div id = "main_page">
     <ul id = "upload_box">
@@ -62,35 +59,35 @@
 <div id = "result_page">    
     <div>
         <form action='/'>
-            <input class="btn btn-primary btn-block" type="submit" value="Return to Main Page">
+            <input class="btn btn-primary btn-block btn-lg" type="submit" value="Return to Main Page">
         </form>
         <br>
     </div>
 
     <div>
         <form action='/get-image' id = 'get_image'>
-            <input class="btn btn-info btn-block" type="submit" value="Get Visualized Scores">
+            <input class="btn btn-info btn-block btn-lg" type="submit" value="Get Visualized Scores">
         </form>
         <br>
     </div>
 
     <div>
         <form action='/get-sound' id = 'get_sound'>
-            <input class="btn btn-light btn-block" type="submit" value="Get Sound Tracks">
+            <input class="btn btn-light btn-block btn-lg" type="submit" value="Get Sound Tracks">
         </form>
         <br>
     </div>
 
-    <div class="btn-group dropright btn-block">
-        <button type="button" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="btn-group dropright btn-block btn-lg">
+        <button type="button" class="btn btn-success btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Get Files
         </button>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="/get-file/musicxml">MusicXML</a>
-            <!---a class="dropdown-item" href="/get-file/lilypond">Lilypond</a--->
             <a class="dropdown-item" href="/get-file/abc">ABC</a>
+            <!---a class="dropdown-item" href="/get-file/lilypond">Lilypond</a--->
             <!---a class="dropdown-item" href="/get-file/braille">Braille</a--->
-            <a class="dropdown-item" href="/get-file/vexflow">Vexflow</a>
+            <!---a class="dropdown-item" href="/get-file/vexflow">Vexflow</a--->
             <!---a class="dropdown-item" href="/get-file/scala">Scala</a--->
           </div>
     </div>
