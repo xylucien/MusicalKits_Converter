@@ -2,8 +2,9 @@
 
 This project aims to provide a web service to convert between different music sheet formats. It also supports generating visaulized score and sound file. The app is hosted on Amazon Web Service Elastic Beanstalk.
 
-Converter Script Credit: https://wim.vree.org/svgParse/xml2abc.html
 Converter Core Credit: Music21, Musescore3
+
+Musicxml to ABC Script Credit: https://wim.vree.org/svgParse/xml2abc.html
 
 # Install
 
