@@ -7,16 +7,19 @@ Converter Core Credit: Music21, Musescore3
 
 # Install
 
-For local testing, do the following:
+To install, do the following:
 
 ```
-# Clone the repository
+# clone the repository
 $ git clone https://github.com/lucien386/MusicalKits_Converter.git
 $ cd MusicalKits_Converter
+
+# install dependencies
+$ pip3 install -r requirements.txt
+
+# run the setup script
 $ cd scripts
-# run the setup script and install python package
 $ sh setup.sh
-$ pip3 install -e .
 ```
 # Run
 ```
