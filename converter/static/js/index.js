@@ -1,5 +1,38 @@
 'use strict';
     
+// create an alert div
+var createAlert = function(alert_type){
+    // if alert already exists, remove current alert
+    if(!!document.getElementById("alert")){
+        var delete_alert = document.getElementById("alert");
+        delete_alert.parentNode.removeChild(delete_alert);
+    }
+
+    var new_alert = document.createElement('div');
+    new_alert.className = "alert alert-dismissible fade show nonselect";
+    new_alert.className += " alert-"+alert_type;
+    new_alert.id = "alert";
+    new_alert.setAttribute("role", "alert");
+
+    var alert_message = document.createElement('div');
+    alert_message.id = "alert_message";
+
+    var close_button = document.createElement('button');
+    close_button.id = "close_button";
+    close_button.classList.add("close");
+    close_button.setAttribute("data-dismiss", "alert");
+    close_button.setAttribute("aria-label", "Close");
+    
+    var close_sign = document.createElement('span');
+    close_sign.setAttribute("aria-hidden", "true");
+    close_sign.innerHTML = "&times;"
+
+    document.getElementById('alert_box').appendChild(new_alert);
+    document.getElementById('alert').appendChild(alert_message);
+    document.getElementById('alert').appendChild(close_button);
+    document.getElementById('close_button').appendChild(close_sign);
+};
+
 // feature detection for drag&drop upload
 var isAdvancedUpload = function()
     {
@@ -30,6 +63,7 @@ function textSubmit(e) {
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
                 }
+                createAlert('danger');
                 document.getElementById('alert_message').innerHTML = result_data.message;
                 document.getElementById('alert').style.display = 'block';
                 $('#text').slideUp(500);
@@ -117,6 +151,7 @@ Array.prototype.forEach.call( forms, function( form )
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
                 }
+                createAlert('danger');
                 document.getElementById('alert_message').innerHTML = result_data.message;
                 document.getElementById('alert').style.display = 'block';
                 $('#file').slideUp(500);
