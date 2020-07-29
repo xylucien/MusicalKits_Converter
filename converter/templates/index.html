@@ -7,37 +7,37 @@
 </script>
 {% endblock %}
 
+{% block nav %}
+<nav class="navbar py-0 navbar-light" style="background-color: rgba(0,0,0,.075);">
+    <a class="navbar-brand" href="#">
+        <img src="/static/favicon/favicon-32x32.png" width="32" height="32" alt="" class="d-inline-block align-top"></a>
+
+    <div id="upload_box">
+            <a id="file-button" class="uploadfile nav-item nav-link btn btn-outline-success">Upload File</a>
+            <a id="text-button" class="submittext nav-item nav-link btn btn-outline-primary">Submit Text</a>
+        </div>
+</nav>
+
+
+{% endblock %}
 
 {% block body %}
-<div id = "alert_box">
-    
-</div>
-
-<h1 id = "the_title" class = "nonselect">MusicXML to ABC Converter</h1>
+<div id = "alert_box"></div>
+<h1 id = "the_title" class = "nonselect">Music Sheets Conversion Made Easy</h1>
 
 <div id = "main_page">
-    <ul id = "upload_box">
-        <li id = "file-box" >
-            <h1 id="file-button" class="uploadfile">Upload File</h1>
-        </li>   
-
-        <li id="text-box">
-            <h1 id="text-button" class="submittext">Submit Text</h1>
-        </li>  
-    </ul>
-
-    <br style="padding: 30px 0px 0px 0px;">
-
     <div id = "text">
         <form method="POST" id="text_input">
-            <label for="textformat">Choose a format:</label>
+            <label for="textformat" class="nonselect">Choose a format:</label>
             <select id="textformat" form="text_input">
                 <option value=".musicxml">MusicXML</option>
                 <option value=".abc">ABC</option>
                 <!---option value=".md">MuseData</option--->
                 <!---option value=".rntxt">Roman Text</option--->
             </select>
-            <textarea name="content" id = "textcontent" form="text_input" rows="15" cols="80"></textarea>
+            <br>
+            <textarea name="content" id = "textcontent" form="text_input" rows="15" cols="87"></textarea>
+            <br>
             <button type ="submit" class="btn btn-primary btn-lg" id = "text_submit"><strong>Submit</strong></button>
         </form>
     </div>
