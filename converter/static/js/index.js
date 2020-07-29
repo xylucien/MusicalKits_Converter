@@ -61,9 +61,12 @@ function textSubmit(e) {
                     document.title = "Result Page";
                     document.getElementById('the_title').innerHTML = "Result";
                     $('#main_page').slideUp(500);
-                    $('#result_page').slideDown(1500);                    
+                    $('#result_page').slideDown(1500);     
+                    createAlert('success');               
                 }
-                createAlert('danger');
+                else{
+                    createAlert('danger');
+                }
                 document.getElementById('alert_message').innerHTML = result_data.message;
                 document.getElementById('alert').style.display = 'block';
                 $('#text').slideUp(500);
@@ -150,8 +153,11 @@ Array.prototype.forEach.call( forms, function( form )
                     document.getElementById('the_title').innerHTML = "Result";
                     $('#main_page').slideUp(500);
                     $('#result_page').slideDown(1500);                    
+                    createAlert('success');               
                 }
-                createAlert('danger');
+                else{
+                    createAlert('danger');
+                }
                 document.getElementById('alert_message').innerHTML = result_data.message;
                 document.getElementById('alert').style.display = 'block';
                 $('#file').slideUp(500);
@@ -169,7 +175,7 @@ Array.prototype.forEach.call( forms, function( form )
 
 $(document).ready(function() {
     $('#text').slideUp(0);
-    $('#file').slideUp(0);
+    //$('#file').slideUp(0);
     $('#result_page').slideUp(0);
 });
 
