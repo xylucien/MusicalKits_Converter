@@ -8,8 +8,8 @@
 {% endblock %}
 
 {% block nav %}
-<nav class="navbar py-0 navbar-light" style="background-color: rgba(0,0,0,.075);">
-    <a class="navbar-brand" href="#">
+<nav class="navbar py-0 navbar-light fixed-top" style="background-color: #e3f2fd;height:70px;">
+    <a class="navbar-brand" href="#" id = "webicon" onclick="window.location.href = '/'">
         <img src="/static/favicon/favicon-32x32.png" width="32" height="32" alt="" class="d-inline-block align-top"></a>
 
     <div id="upload_box">
@@ -22,13 +22,20 @@
 {% endblock %}
 
 {% block body %}
-<div id = "alert_box"></div>
-<h1 id = "the_title" class = "nonselect">Music Sheets Conversion Made Easy</h1>
+
+<div class="jumbotron" style="background-color: #e3f2fd;">
+    <h1 id = "the_title" class = "nonselect display-4">Music Sheets Conversion Made Easy.</h1>
+    <p class="nonselect lead">Support Musicxml(.musicxml, .mxl), ABC(.abc) and MIDI(.mid, .midi) input.
+    <br>    
+    Support Musicxml(.musicxml, .mxl), ABC(.abc), MIDI(.mid, .midi) and image(.png) output.</p>
+    <hr class="my-4">
+    <div id = "alert_box"></div>
+</div>
 
 <div id = "main_page">
     <div id = "text">
         <form method="POST" id="text_input">
-            <label for="textformat" class="nonselect">Choose a format:</label>
+            <label for="textformat" class="nonselect">Choose your format:</label>
             <select id="textformat" form="text_input">
                 <option value=".musicxml">MusicXML</option>
                 <option value=".abc">ABC</option>
@@ -78,7 +85,7 @@
         <br>
     </div>
 
-    <div class="btn-group dropright btn-block btn-lg">
+    <div class="btn-group dropdown btn-block btn-lg" id = "download_file_button">
         <button type="button" class="btn btn-success btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Get Files
         </button>
