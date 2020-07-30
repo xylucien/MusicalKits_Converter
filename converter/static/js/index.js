@@ -175,8 +175,8 @@ Array.prototype.forEach.call( forms, function( form )
 
 $(document).ready(function() {
     $('#text').slideUp(0);
-    //$('#file').slideUp(0);
     $('#result_page').slideUp(0);
+    $('.fdin').hide().fadeIn(2000);
 });
 
 $('#text-box').hover(
@@ -192,10 +192,14 @@ $('#text-button').click(function() {
     $('#main_page').slideDown(0);
     $('#text').slideToggle(300);
     $('#file').slideUp(300);
+    try{$('#alert').remove();}
+    catch{}
 });
     
 $('#file-button').click(function() {
     $('#main_page').slideDown(0);
     $('#file').slideToggle(300);
     $('#text').slideUp(300);
+    try{$('#alert').remove();}
+    catch{}
 });
