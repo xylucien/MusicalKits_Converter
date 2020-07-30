@@ -174,6 +174,7 @@ Array.prototype.forEach.call( forms, function( form )
 
 
 $(document).ready(function() {
+    $('#text').css('display', 'block');
     $('#text').slideUp(0);
     $('#result_page').slideUp(0);
     $('.fdin').hide().fadeIn(2000);

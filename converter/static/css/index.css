@@ -147,7 +147,9 @@ html{
 {
     text-align: center;
 }
-
+#text{
+    display: none;
+}
 #alert
 {
     display: none;
