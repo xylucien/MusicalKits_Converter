@@ -189,11 +189,13 @@ $('#file-box').hover(
 });
 
 $('#text-button').click(function() {
+    $('#main_page').slideDown(0);
     $('#text').slideToggle(300);
     $('#file').slideUp(300);
-    });
+});
     
-    $('#file-button').click(function() {
+$('#file-button').click(function() {
+    $('#main_page').slideDown(0);
     $('#file').slideToggle(300);
     $('#text').slideUp(300);
-    });
+});
