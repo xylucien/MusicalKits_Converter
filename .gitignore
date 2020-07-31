@@ -14,5 +14,3 @@ aws/
 .cache/
 .dbus/
 upload_data.musicxml
-.ebextensions/https-instance.config
-.ebextensions/privatekey.config
